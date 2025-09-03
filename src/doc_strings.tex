@@ -1,0 +1,26 @@
+\chapter{Doc strings}
+\section{Google}
+    Is the most popular but not the most standard
+    
+    \paragraph{Todo}
+        \textbf{Multiline}
+        \begin{lstlisting}[language=Python]
+                def compute_path(points):
+                    """
+                    Compute the optimal path through given points.
+
+                    TODO:
+                    - Handle cases where points list is empty
+                    - Add support for 3D coordinates
+                    - Optimize complexity (currently O(n^2))
+                    """
+                    pass
+        \end{lstlisting}
+        \textbf{Single line}
+        \begin{lstlisting}[language=Python]
+                def foo():
+                    """
+                    TODO: implement later
+                    """
+                    pass
+        \end{lstlisting}

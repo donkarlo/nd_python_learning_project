@@ -1,0 +1,205 @@
+\chapter{Design patterns}
+        
+    \section{Generating Objects}
+        
+        \paragraph{Factory method}
+            \begin{lstlisting}[language=Python]
+                from abc import ABC, abstractmethod
+            
+                class Document(ABC):
+                    @abstractmethod
+                    def create_page(self):
+                            pass
+            
+                    class Resume(Document):
+                        def create_page(self):
+                            return "ResumePage"
+            
+                    class Report(Document):
+                        def create_page(self):
+                            return "ReportPage"
+            \end{lstlisting}
+        
+        \paragraph{Static factory method}
+            
+            \begin{lstlisting}[language=Python]
+                class Car:
+                    def init(self, brand):
+                        self.brand = brand
+                    @staticmethod
+                    def toyota():
+                        return Car("Toyota")
+                my_car = Car.toyota()
+            \end{lstlisting}
+        
+        \paragraph{Abstarct factory}
+        
+        \paragraph{Simple factory}
+            
+            \begin{lstlisting}[language=Python]
+                def shape_factory(kind):
+                    if kind == "circle":
+                        return Circle()
+                    elif kind == "square":
+                        return Square()
+            \end{lstlisting}
+        
+        \paragraph{Factory as a Function Object}
+            
+            \begin{lstlisting}[language=Python]
+                class ConnectionFactory:
+                    def call(self, host):
+                        return Connection(host)
+                factory = ConnectionFactory()
+                conn = factory("localhost")
+            \end{lstlisting}
+        
+        \paragraph{Parameterized Factory}
+            
+            Factory methods that accept parameters to configure the returned object.
+            
+            Often combined with dependency injection.
+        
+        \paragraph{}
+        
+        \paragraph{Virtual Constructor (a.k.a. Class Method Factory)}
+        
+        \paragraph{}
+            
+            \begin{lstlisting}[language=Python]
+                class Shape:
+                    @classmethod
+                    def from_sides(cls, sides):
+                            if sides == 3:
+                                return Triangle()
+                            elif sides == 4:
+                                return Square()
+                            \end{lstlisting}
+        
+        \paragraph{Factory registry}
+            
+            The factory registry pattern is just a way to avoid a big if/elif chain by keeping a dictionary of “keys → constructor functions”. It’s basically a lookup table for creating objects.
+            
+            
+            
+            \begin{lstlisting}[language=Python]
+                class AnimalFactory:
+                    _registry: dict[str, type] = {}
+                    @classmethod
+                    def register(cls, name: str, animal_cls: type) -> None:
+                        """Register a
+                    class under a given name."""
+                        cls._registry[name.lower()] = animal_cls
+            
+                    @classmethod
+                    def create(cls, name: str, *args, **kwargs):
+                        """Create an instance of the registered class."""
+                        animal_cls = cls._registry.get(name.lower())
+                        if animal_cls is None:
+                            raise ValueError(f"Unknown animal type: {name}")
+                        return animal_cls(*args, **kwargs)
+            
+                # Example classes
+                class Dog:
+                    def speak(self):
+                        return "woof"
+            
+                class Cat:
+                    def speak(self):
+                        return "meow"
+            
+                # Register them
+                AnimalFactory.register("dog", Dog)
+                AnimalFactory.register("cat", Cat)
+                # Usage
+                a = AnimalFactory.create("dog")
+                b = AnimalFactory.create("cat")
+                print(a.speak()) # woof print(b.speak()) # meow
+            \end{lstlisting}
+
+\section{Flexiable objects}
+    
+    \subsection{Compposite}
+    
+    \subsection{Decorator}
+        \paragraph{UML}
+            
+        \paragraph{usecase:}
+        \begin{itemize}
+            \item Adding methods to a basic object
+            \item Changing the behavior of a basic object
+        \end{itemize}
+        
+        \paragraph{Implementation}
+            \begin{itemize}
+                    \item Interface: The genetic of what is trying to be modeled
+                    \item Abstract class \textbf{Decoratr} inherits(implements) from \textbf{Interface}, this class is the genetics of being the concept of a decoration. It composes a protected \textbf{\_inner} property of type Interface. What ever method or property of it is called, it calls the same method on the \textbf{\_inner}
+                    \item Decorations are the classes who inherit from \textit{Decorator}. Either they implement a method or from the Decorator or if that method doesnt exist automatically , according to inheritance rules, once again \textbf{Decorator.\_inner.method or .property} will send it to next, more inner method or property. Another option is
+            \end{itemize}
+        
+        \paragraph{Notes}
+            \begin{itemize}
+                    \item Decoration reimplements inheritince in horizentally as real inheritance does it vertically. Or maybe it is better to say that it gives us a second utility for inhertitence
+                    \item Decorations are not needed to implement \textbf{\_\_init\_\_} unless they neeed their own arguments for the \textbf{\_\_init\_\_(self, inner:Decorator, a, b, c)} in that case \textbf{super().\_\_init(inner)\_\_} must be called in \textbf{\_\_init\_\_} body.
+                    \item In case a special kind of decorator can only decorate another special then \textbf{\_\_init\_\_(inner:SpecialDecoration, ...)}
+                    \item if two decorators can not be used together then you probably need two set of decorators. or you need several sub classes from the Basic class
+                    \item the docoration does not need to use \mintinline{python}{self._inner.method()}, it just calls \mintinline{python}{self.method()} and it calss
+                    \item  it is always better to used passive form names for decoratars for example "diced" for something that adds dictionary abilities to inner object
+            \end{itemize}
+        
+        \paragraph{Downsides}
+            \begin{itemize}
+                    \item sometime two decorators are inconsistenet with each other
+            \end{itemize}
+    
+    \subsection{Facade}
+    
+    \subsection{Template method}
+    
+    \subsection{Adapter}
+        Makes an external SDK similar to how you see the world. Translates one interface into another so code expecting a Target can use an incompatible Adaptee without changing either.
+        \begin{lstlisting}[language=Python]
+            class Adaptee:
+                def specific(self):
+                    return "OK"
+
+            class Adapter:
+                def __init__(self, a):
+                    self.a = a
+                def request(self):
+                    return self.a.specific()
+
+            print(Adapter(Adaptee()).request())
+        \end{lstlisting}
+        A real world example
+        \begin{lstlisting}[language=Python]
+            from typing import Protocol
+
+            # Target interface expected by the client
+            class PaymentGateway(Protocol):
+                def charge(self, amount: float, currency: str) -> str: ...
+
+            # Adaptee (3rd-party SDK) with an incompatible API
+            class StripeSDK:
+                def create_payment(self, cents: int, curr: str) -> dict:
+                    # Imagine real SDK call; returns a dict with an "id"
+                    return {"id": f"pay_{cents}_{curr}"}
+
+            # Adapter: makes StripeSDK look like PaymentGateway
+            class StripeAdapter(PaymentGateway):
+                def __init__(self, sdk: StripeSDK):
+                    self._sdk = sdk
+
+                def charge(self, amount: float, currency: str) -> str:
+                    # Translate units & parameter names
+                    cents = int(round(amount * 100))
+                    result = self._sdk.create_payment(cents=cents, curr=currency.lower())
+                    return result["id"]
+
+            # Client code uses the Target interface only
+            def checkout(gw: PaymentGateway) -> str:
+                return gw.charge(12.99, "EUR")
+
+            gateway = StripeAdapter(StripeSDK())
+            payment_id = checkout(gateway)  # works via the adapter
+        \end{lstlisting}

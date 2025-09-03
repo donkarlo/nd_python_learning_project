@@ -1,0 +1,135 @@
+\chapter{Data types}
+
+\section{Core}
+
+\section{Basic}
+    
+    \subsection{Bytes}
+        This is the rawest form of data
+        \begin{lstlisting}[language=Python]
+        raw = b'\x48\x65\x6c\x6c\x6f'
+        raw.decode("utf-8")  # "Hello"
+        data_bytes = b'{"name": "Ali", "age": 30}'
+        data_dict = json.loads(data_bytes.decode("utf-8"))
+        print(data_dict["name"])  # Ali
+        \end{lstlisting}
+        
+        \paragraph{As data type hint}
+            \begin{lstlisting}[language=Python]
+                class Interface(Protocol):
+                    _ram: bytes
+            \end{lstlisting}
+        
+        \paragraph{As data type}
+            \begin{lstlisting}[language=Python]
+                data_bytes = b'hello'
+                data_str = data_bytes.decode("utf-8")
+                print(data_str)   # "hello"
+            \end{lstlisting}
+        
+        \paragraph{Converting to string}
+            \begin{lstlisting}[language=Python]
+                data_str = "hello"
+                data_bytes = data_str.encode("utf-8")
+                print(data_bytes)  # b'hello'
+            \end{lstlisting}
+    
+    \subsection{Numbers}
+        
+        \paragraph{int}
+        
+        \paragraph{float}
+        
+        \paragraph{complex}
+        
+        \paragraph{Decimal}
+            for arbitary precision fro scientific calculation
+        
+        \paragraph{Fraction}
+            For rational numbers
+
+\section{Mutability}
+
+\section{Collections}
+    \subsection{Sequence}
+        They have order
+    
+        \paragraph{list}
+        \paragraph{tuple}
+        \paragraph{str}
+        \paragraph{range}
+    \subsection{Shared functions}
+        \paragraph{slice}
+            \begin{minted}{python}
+                s = slice(2, 5, 1)
+                nums = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+                print(nums[s])
+            \end{minted}
+    \subsection{set types}
+        \paragraph{set}
+        \paragraph{fozenset}
+    
+    \subsection{Mapping types}
+        Mapping type is a key value type
+        \paragraph{dict}
+        \paragraph{defaultdict}
+            If the key doesnt exist it creates it
+        \paragraph{ChainMap}
+            Combines two dicts
+        \paragraph{MappingProxyType}
+            A read only dict
+        \paragraph{Ordered Dictoionary}
+            \begin{minted}{python}
+                from collections import OrderedDict
+    
+                od = OrderedDict()
+                od["a"] = 1
+                od["b"] = 2
+                od["c"] = 3
+                
+                print(od)  # OrderedDict([('a', 1), ('b', 2), ('c', 3)])
+    
+                
+                od.move_to_end("b")
+                print(od)  # OrderedDict([('a', 1), ('c', 3), ('b', 2)])
+    
+                od.move_to_end("b", last=False)
+                print(od)  # OrderedDict([('b', 2), ('a', 1), ('c', 3)])
+            \end{minted}
+    
+
+\section{Hashability}
+    A hashable object has implemented \pyl{__hash__()} and \pyl{__eq__()} functions. Data types such as int, str, float are hashable but list, dict and set are not
+    \paragraph{\_\_hash\_\_()}
+        when implemented in a class, then it should return an  integer value sokmehow related to that object
+
+\section{methods}
+    
+    remove(element): raises key error if element doesnt exist
+    
+    discard(element): removes but does nothing if the element doesnt exist
+    
+    pop: removes and returns an arbitrary element
+    
+    clear: removes all the elements
+
+\section{type hints}
+
+\section{Optional}
+    
+    When the type is a class object or None
+    
+    \begin{lstlisting}[language=Python]
+        ->Optional[CommentedMap]
+    \end{lstlisting}
+    
+    The above code says the return is either CommentedMap or None
+
+\section{Generic}
+    \begin{lstlisting}[language=Python]
+        from typing import Generic, TypeVar, Protocol
+        T = TypeVar("T")
+        class Unit(Protocol, Generic[T]):
+            def __iter__(self) -> Iterator[T]: ...
+            def __len__(self) -> int: ...
+    \end{lstlisting}

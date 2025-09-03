@@ -1,0 +1,26 @@
+\chapter{tools}
+\section{Tools}
+    
+    \subsection{mypy}
+        To force checking types.
+        
+        Add this to project.toml
+        \begin{minted}{toml}
+            [tool.mypy]
+            python_version = "3.13"
+            strict = true
+            ignore_missing_imports = true
+            mypy_path = ["./src"]
+            namespace_packages = true
+            explicit_package_bases = true
+            files = ["utilityx", "tests"]
+            exclude = '(^|/)conftest\.py$'
+        \end{minted}
+        
+        and in pycharm install mypy plugin and then go to settings>tools>mypy and in configutaion write project.toml . the on any folder in project, right click and click mypy. It is also on the run window with a sign of two snakes tangled in each other.
+    
+    \subsection{IDE}
+        
+        \subsubsection{Pycharm}
+            
+            \paragraph{Interpreter} To set the interpreter virtual environment go to: \texttt{~/phd\_venv/bin} and choose python and not python 3.13 or other

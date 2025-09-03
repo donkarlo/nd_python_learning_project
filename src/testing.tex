@@ -1,0 +1,58 @@
+\chapter{Testing}
+Testing using pytest
+\begin{minted}{python}
+    import pytest
+    import EmailAddressValidator
+    
+    
+    class TestSportradarEmailAddressValidator:
+        @pytest.mark.parametrize(
+            "input_email, expected_validity",
+            [
+                ("someone@sportradar.com", True),
+                ("anotherone@sport.at", False),
+                ("dead.red", False),
+            ]
+        )
+        def test_get_validity(self, input_email, expected_validity):
+            email_validator = SportRadarEmailAddressValidator(input_email)
+            assert email_validator.get_validity() == expected_validity
+\end{minted}
+
+\section{assert}
+Assert should be interpreted as \textit{to make sure}
+
+\section{fixures}
+    
+    \paragraph{autouse=True}
+        \begin{minted}{python}
+            # tests/conftest.py
+            import pathlib
+            import pytest
+            
+            @pytest.fixture(autouse=True)
+            def chdir_to_test_dir(request, monkeypatch):
+                monkeypatch.chdir(pathlib.Path(request.fspath).parent)
+        \end{minted}
+    \paragraph{With yieldd}
+        \begin{minted}{python}
+            @pytest.fixture
+            def conf_fixture():
+                # load config file
+                yield # test runs here
+                # remove the config structure
+        \end{minted}
+        
+    
+\section{conftest.py}
+    A file that runs before the tests from the folder in which it is to deeper.
+    The followng code adds each test's file path to tests directory for example if a test file is in tests/storage/type/test\_file.py, it changes the working directory from tests/test\_file.py to tests/storage/type/test\_file.py
+    \begin{minted}{python}
+        # tests/conftest.py
+        import pathlib
+        import pytest
+        
+        @pytest.fixture(autouse=True)
+        def chdir_to_test_dir(request, monkeypatch):
+            monkeypatch.chdir(pathlib.Path(request.fspath).parent)
+    \end{minted}

@@ -1,0 +1,247 @@
+\chapter{Python OOP}
+    
+    \section{Rules}
+        what is rational and closer to natural language must be implemented not if it look ugly or not performant
+        
+        \paragraph{Low coupling}
+        
+        \paragraph{high cohesion}
+        
+        \paragraph{Favor composition over inheritence}
+            Prefer composing classes together rather than relying on blind inheritance.
+
+\section{DependencyInjection}
+    The class of function shouldnt build the objects it need they should be injected to it
+    
+    \paragraph{Constructor Injection}
+        depenedencies are given through the constructor
+    
+    \paragraph{Setter Injection}
+        dependencies are given through the setters
+    
+    \paragraph{Interface Injection}
+        The consumer class implements a method so that other's use it
+
+\subsection{SOLID rules}
+    Five most important OOP principle
+    
+    \paragraph{SRP (Single Responsibility Principle)}
+    
+    \paragraph{OCP (Open/Closed Principle)}
+        Code should be open for extension but closed for modification.
+    
+    \paragraph{LSP (Liskov Substitution Principle)}
+        If S is a subtype of T, then objects of type T in a program may be replaced with objects of type S without altering the correctness of the program.
+        \textbf{incorrect example}
+        \begin{lstlisting}[language=Python]
+                        class Bird:
+                            def fly(self):
+                                return "Flying"
+    
+                        class Ostrich(Bird):
+                            def fly(self):
+                                raise Exception("I can't fly!")
+        \end{lstlisting}
+        
+        \textbf{correct example}
+        \begin{lstlisting}[language=Python]
+                        class Bird:
+                            pass
+    
+                        class FlyingBird(Bird):
+                            def fly(self):
+                                return "Flying"
+                        class NonFlyingBird(Bird):
+                            pass
+        \end{lstlisting}
+    
+    \paragraph{ISP (Interface Segregation Principle)}
+        The class should not be forced to implement the methods that it doesnt need
+    
+    \paragraph{DIP (Dependency Inversion Principle)}
+        High-level modules should not depend on low-level details; both should depend on abstractions.
+
+\subsection{Principles for Extensibility}
+    
+    \paragraph{Single Level of Abstraction Principle (SLAP)}
+        Each function or method should operate at a single level of abstraction (don’t mix details with high-level concepts).
+    
+    \paragraph{Stability vs. Change (Stable Abstractions Principle)}
+        Frequently used parts of the system should remain stable and less prone to change.
+    
+    \paragraph{High Reusability}
+        Modules should be designed so they can be reused in other parts of the system or even in other projects.
+    
+    \paragraph{Principle of Least Astonishment (POLA)}
+        The behavior of the code should match expectations and not surprise users or developers.
+
+\section{module}
+is just one .py file
+
+\section{package}
+
+- The folder that used to have \_\_init\_\_ in it but from python 3.3 it is not necessary.
+
+\section{self}
+
+\section{cls}
+
+Refers to the structure of the class. For example you can add a new static member
+
+Can can :
+
+Access static members
+
+Access class methods
+
+Create new objects of the class
+
+\begin{lstlisting}[language=Python]
+        class Dog:
+            species = "Canis lupus"
+            @classmethod
+            def set_species(cls, new_species):
+                cls.species = new_species  # changes for all Dogs
+        Dog.set_species("Puffy") # changes all dogs speicies to Puffy
+\end{lstlisting}
+
+\subsection{cls.\_\_members\_\_}
+
+\section{super}
+You may write super without parentheses, for example, super.init(). However, this references the init method of the parent class without actually invoking it. It functions similarly to cls but applies to the parent class. To call the method, use:
+
+\begin{lstlisting}[language=Python]
+    super().init()
+\end{lstlisting}
+
+\section{\_\_init\_\_}
+
+\section{\_\_new\_\_}
+
+This is how new works:
+
+new(cls) → gets the class (cls) → creates the object
+
+\begin{lstlisting}[language=Python]
+    # send cls is obligational
+    super().__new__(cls)
+\end{lstlisting}
+
+This is good for helping singleton classes
+
+
+Sending cls is obligational. It is not like
+
+\section{@classmethod}
+
+A method that gets an instance of the class , the cls, insted of self, to manipulate the structure of the the class
+
+\section{@staticmethod}
+
+\section{@property}
+
+Call like a property but always run a method before that
+
+\begin{lstlisting}[language=Python]
+    class Engine:
+
+        def start(self): print("engine on")
+    class Car:
+
+        def init(self, engine: Engine): self._engine = engine
+    @property
+    def engine(self) -> Engine:
+        return self._engine
+
+    c = Car(Engine())
+    c.engine.start()
+\end{lstlisting}
+
+\section{@override}
+
+just to tell mypy or pycharm as a static type checker to tell the compiler to be careful that the below function is overriden so that if there is an spelling error mypy can say
+
+"You said this method is overriden but I can not find its signiture in super class"
+
+\begin{lstlisting}[language=Python]
+    from typing import override
+
+    class Animal:
+
+
+        def speak(self) -> None:
+            print("...")
+
+    class Dog(Animal):
+        @override
+
+    def speak(self) -> None:
+            print("Woof!")
+\end{lstlisting}
+
+\section{\_\_repr\_\_}
+
+How the object is represented as as string.
+
+\section{\_\_str\_\_}
+
+
+Is like repr but no need for calling repr
+
+\begin{lstlisting}[language=Python]
+    class Group:
+
+        def init(self, mods: set[Modification]):
+            self._mods = mods # trust the caller
+        def add(self, mod: Modification) -> None:
+            self._mods.add(mod)
+        def remove(self, mod: Modification) -> None:
+            self._mods.discard(mod)
+        def has(self, mod: Modification) -> bool:
+            return mod in self._mods
+        def repr(self) -> str:
+            return f"Group({', '.join(m.name for m in self._mods)})"
+\end{lstlisting}
+
+\section{protocol}
+    To create something like interfaces in Java but without inhertitence to help mypy
+    \begin{lstlisting}[language=Python]
+                from typing import Protocol
+                class Flyer(Protocol):
+                    def fly(self) -> None: ...
+    
+                class Bird:
+                    def fly(self) -> None:
+                        print("Flapping wings")
+                    class Airplane:
+                        def fly(self) -> None:
+                            print("Jet engines roaring")
+                    def make_it_fly(obj: Flyer):
+                        obj.fly()
+                make_it_fly(Bird())
+\end{lstlisting}
+    protocol can also have attributes along with methods
+    \begin{lstlisting}[language=Python]
+                from typing import Protocol
+                from uuid import UUID
+    
+                class HasId(Protocol):
+                    id: UUID  # any object with this attribute conforms
+    
+                class User:
+                    def __init__(self, user_id: UUID, name: str):
+                        self.id = user_id
+                        self.name = name
+    
+                def get_id(entity: HasId) -> UUID:
+                    return entity.id
+    \end{lstlisting}
+
+\section{metaclass}
+    A class that defines how another class should be created in general all classes as blue prints are subclasses of Metaclass, but you can change the metaclass of a specifica class too:
+    
+    \begin{lstlisting}[language=Python]
+            class MyBeautyfulClass (metaclass=MyOwnMetaClass):
+                def __init__():
+                    print("test")
+    \end{lstlisting}

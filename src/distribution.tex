@@ -1,0 +1,41 @@
+\chapter{Distribution}
+\section{Project}
+    the most standard structure compatible with PEP517 is:
+    \dirtree{%
+    .1 packagename\_project.
+    .2 src.
+    .3 packagename.
+    .4 \_\_main\_\_.py.
+    .4 \_\_init\_\_.py.
+    .2 tests.
+    .2 dist.
+    .2 .gitignore.
+    .2 pyproject.toml.
+    .2 README.md.
+}
+
+\section{Pypi}
+
+\section{wheel}
+    A wheel is a built package format — basically a pre-built, ready-to-install archive for a Python project.
+    File extension: .whl
+    It’s faster to install than building from source because all the compiling is already done.
+    
+    Wheels follow the PEP 427 standard.
+    
+    How to build:
+    
+    \# do all the follwing commands inside your venv
+    
+    \begin{lstlisting}[language=bash]
+    cd ~/repos/utilityx_project
+    pip install -U build
+    #creates dist/.tar.gz and dist/.whl all go into the project build forlder
+    python -m build
+    \end{lstlisting}
+    
+    How to install
+    
+    \begin{lstlisting}[language=bash]
+    pip install dist/utilityx-1.0.0-*.whl
+    \end{lstlisting}

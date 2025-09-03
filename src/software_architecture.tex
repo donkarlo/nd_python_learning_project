@@ -1,0 +1,35 @@
+\chapter{Sofware development rules}
+    
+\section{Fundamental Principles}
+    
+    \subsection{Separation of Concerns (SoC)}
+        Each part of the system should handle only one specific aspect (UI, logic, data, etc.).
+    
+    \subsection{Information Hiding}
+        Implementation details should be hidden, and only an interface should be exposed.
+    
+    \subsection{Don’t Repeat Yourself (DRY)}
+        No duplicated code; shared logic must exist in a single place.
+    
+    \subsection{Keep It Simple, Stupid (KISS)}
+        Keep things simple; avoid unnecessary complexity.
+    
+    \subsection{You Aren’t Gonna Need It (YAGNI)}
+        Don’t implement features you don’t currently need.
+    
+    \subsection{Law of Demeter (LoD) / Principle of Least Knowledge}
+        A module should only interact with its immediate neighbors (“don’t talk to strangers”).
+
+\section{Architecture Principles}
+    
+    \subsection{Layered Architecture Principle}
+        The system should be divided into clear layers (presentation, application, domain, infrastructure).
+    
+    \subsection{Hexagonal Architecture (Ports and Adapters)}
+        Dependencies should point inward to the core domain, and input/output should be handled through adapters.
+    
+    \subsection{CQRS (Command Query Responsibility Segregation)}
+        Separate operations that change data (Commands) from those that read data (Queries).
+    
+    \subsection{Event-Driven Design Principle}
+        Components should communicate via messages/events as much as possible, instead of direct dependencies.
