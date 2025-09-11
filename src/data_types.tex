@@ -114,22 +114,36 @@
     clear: removes all the elements
 
 \section{type hints}
+    \paragraph{Annotated}
+        with this type you can put comments for example in the following example x muist be positive
+        \begin{minted}{python}
+            from typing import Annotated
+            x: Annotated[int, "positive"] = 42
+        \end{minted}
+        with fast API, this example say that the integer myst be between 0 and 100
+        \begin{minted}{python}
+            from typing import Annotated
+            from fastapi import Query
+            
+            def get_items(limit: Annotated[int, Query(gt=0, lt=100)]):
+                return {"limit": limit}
+        \end{minted}
 
-\section{Optional}
-    
-    When the type is a class object or None
-    
-    \begin{lstlisting}[language=Python]
-        ->Optional[CommentedMap]
-    \end{lstlisting}
-    
-    The above code says the return is either CommentedMap or None
+    \paragraph{Optional}
+        
+        When the type is a class object or None
+        
+        \begin{lstlisting}[language=Python]
+            ->Optional[CommentedMap]
+        \end{lstlisting}
+        
+        The above code says the return is either CommentedMap or None
 
-\section{Generic}
-    \begin{lstlisting}[language=Python]
-        from typing import Generic, TypeVar, Protocol
-        T = TypeVar("T")
-        class Unit(Protocol, Generic[T]):
-            def __iter__(self) -> Iterator[T]: ...
-            def __len__(self) -> int: ...
-    \end{lstlisting}
+    \paragraph{Generic}
+        \begin{lstlisting}[language=Python]
+            from typing import Generic, TypeVar, Protocol
+            T = TypeVar("T")
+            class Unit(Protocol, Generic[T]):
+                def __iter__(self) -> Iterator[T]: ...
+                def __len__(self) -> int: ...
+        \end{lstlisting}
