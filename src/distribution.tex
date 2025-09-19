@@ -1,5 +1,5 @@
 \chapter{Distribution}
-\section{Project}
+\section{Packaging}
     the most standard structure compatible with PEP517 is:
     \dirtree{%
     .1 packagename\_project.
@@ -30,6 +30,21 @@
         \begin{minted}{shell}
             pip unintall $package_name
         \end{minted}
+    \paragraph{running}
+        To run a package's \_\_main\_\_.py first go to the virtual environment and  in toml add this (in case the package name is sociomind)
+            \begin{minted}{python}
+                [project.scripts]
+                sociomind = "sociomind.__main__:main"
+            \end{minted}
+            then install in editable form the package. Then you can  simply call ```sociomind``` anywhere in virtual environment and it runs sociomind.\texttt{\_\_main\_\_}.py in src project. A standard for \texttt{\_\_main\_\_py} is as follows
+            \begin{minted}{python}
+                def main():
+                    print("This is the sociomind main program")
+                
+                if __name__== "__main__":
+                    main()
+            \end{minted}
+            
 
 \section{Pypi}
 
