@@ -1,0 +1,93 @@
+\documentclass{book}
+\input{conf/main}
+% some shortcuts
+
+
+% ----- Packages loaded before hyperref -----
+\usepackage{titlesec}
+\usepackage[table]{xcolor}
+\usepackage{array}
+\usepackage[colorinlistoftodos]{todonotes}
+\usepackage{amsmath}
+
+
+% graphics
+%% Tikz
+\usepackage{tikz}
+\usetikzlibrary{graphs,graphdrawing,arrows.meta,mindmap,fit,positioning}
+\usegdlibrary{layered,force}
+
+%% images
+\usepackage{graphicx}
+
+%% SVG
+\usepackage{svg}
+
+%%pdf
+\usepackage{pdfpages}
+
+%%
+\usepackage{dirtree}
+
+% Tables
+\usepackage{booktabs}
+\usepackage{adjustbox}
+
+% Forest
+\usepackage[edges]{forest}
+
+% Floats and captions
+\usepackage{float}
+\usepackage{caption}
+\captionsetup{singlelinecheck=false}
+
+% Minted (needs -shell-escape)
+\usepackage{minted}
+\usemintedstyle{friendly}
+\setminted{
+    fontsize=\small,
+    linenos,
+    breaklines,
+    frame=single,
+    tabsize=4,
+    autogobble,
+}
+\setminted[python]{fontsize=\footnotesize}
+
+% Colors and tikz styles (can stay here)
+\definecolor{mainfill}{HTML}{FFF2CC}
+\definecolor{mainborder}{HTML}{D6B656}
+\tikzset{
+    mainnode/.style={
+        draw=mainborder,
+        fill=mainfill,
+        rectangle,
+        align=center,
+        inner sep=5pt,
+        rounded corners,
+        line width=0.8pt,
+        text=black,
+    }
+}
+
+% Depths
+\setcounter{tocdepth}{4}
+\setcounter{secnumdepth}{4}
+
+% ---- Load hyperref LAST (then bookmark, optional) ----
+\usepackage[unicode]{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=black,
+    citecolor=black,
+    urlcolor=black,
+    pdfstartview=FitH,
+    bookmarksopen=true,
+    bookmarksnumbered=true
+}
+% bookmarks
+\usepackage{bookmark}
+
+\input{preamble/macros}
+
+

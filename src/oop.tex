@@ -33,27 +33,27 @@
     \paragraph{LSP (Liskov Substitution Principle)}
         If S is a subtype of T, then objects of type T in a program may be replaced with objects of type S without altering the correctness of the program.
         \textbf{incorrect example}
-        \begin{lstlisting}[language=Python]
-                        class Bird:
-                            def fly(self):
-                                return "Flying"
-    
-                        class Ostrich(Bird):
-                            def fly(self):
-                                raise Exception("I can't fly!")
-        \end{lstlisting}
+        \begin{minted}{python}
+            class Bird:
+                def fly(self):
+                    return "Flying"
+
+            class Ostrich(Bird):
+                def fly(self):
+                    raise Exception("I can't fly!")
+        \end{minted}
         
         \textbf{correct example}
-        \begin{lstlisting}[language=Python]
-                        class Bird:
-                            pass
-    
-                        class FlyingBird(Bird):
-                            def fly(self):
-                                return "Flying"
-                        class NonFlyingBird(Bird):
-                            pass
-        \end{lstlisting}
+        \begin{minted}{python}
+            class Bird:
+                pass
+
+            class FlyingBird(Bird):
+                def fly(self):
+                    return "Flying"
+            class NonFlyingBird(Bird):
+                pass
+        \end{minted}
     
     \paragraph{ISP (Interface Segregation Principle)}
         The class should not be forced to implement the methods that it doesnt need
@@ -96,23 +96,23 @@ Access class methods
 
 Create new objects of the class
 
-\begin{lstlisting}[language=Python]
+\begin{minted}{python}
         class Dog:
             species = "Canis lupus"
             @classmethod
             def set_species(cls, new_species):
                 cls.species = new_species  # changes for all Dogs
         Dog.set_species("Puffy") # changes all dogs speicies to Puffy
-\end{lstlisting}
+\end{minted}
 
 \subsection{cls.\_\_members\_\_}
 
 \section{super}
 You may write super without parentheses, for example, super.init(). However, this references the init method of the parent class without actually invoking it. It functions similarly to cls but applies to the parent class. To call the method, use:
 
-\begin{lstlisting}[language=Python]
+\begin{minted}{python}
     super().init()
-\end{lstlisting}
+\end{minted}
 
 \section{\_\_init\_\_}
 
@@ -122,10 +122,10 @@ This is how new works:
 
 new(cls) → gets the class (cls) → creates the object
 
-\begin{lstlisting}[language=Python]
+\begin{minted}{python}
     # send cls is obligational
     super().__new__(cls)
-\end{lstlisting}
+\end{minted}
 
 This is good for helping singleton classes
 
@@ -142,7 +142,7 @@ A method that gets an instance of the class , the cls, insted of self, to manipu
 
 Call like a property but always run a method before that
 
-\begin{lstlisting}[language=Python]
+\begin{minted}{python}
     class Engine:
 
         def start(self): print("engine on")
@@ -155,7 +155,7 @@ Call like a property but always run a method before that
 
     c = Car(Engine())
     c.engine.start()
-\end{lstlisting}
+\end{minted}
 
 \section{@override}
 
@@ -163,7 +163,7 @@ just to tell mypy or pycharm as a static type checker to tell the compiler to be
 
 "You said this method is overriden but I can not find its signiture in super class"
 
-\begin{lstlisting}[language=Python]
+\begin{minted}{python}
     from typing import override
 
     class Animal:
@@ -177,7 +177,7 @@ just to tell mypy or pycharm as a static type checker to tell the compiler to be
 
     def speak(self) -> None:
             print("Woof!")
-\end{lstlisting}
+\end{minted}
 
 \section{\_\_repr\_\_}
 
@@ -188,7 +188,7 @@ How the object is represented as as string.
 
 Is like repr but no need for calling repr
 
-\begin{lstlisting}[language=Python]
+\begin{minted}{python}
     class Group:
 
         def init(self, mods: set[Modification]):
@@ -201,11 +201,11 @@ Is like repr but no need for calling repr
             return mod in self._mods
         def repr(self) -> str:
             return f"Group({', '.join(m.name for m in self._mods)})"
-\end{lstlisting}
+\end{minted}
 
 \section{protocol}
     To create something like interfaces in Java but without inhertitence to help mypy
-    \begin{lstlisting}[language=Python]
+    \begin{minted}{python}
                 from typing import Protocol
                 class Flyer(Protocol):
                     def fly(self) -> None: ...
@@ -219,9 +219,9 @@ Is like repr but no need for calling repr
                     def make_it_fly(obj: Flyer):
                         obj.fly()
                 make_it_fly(Bird())
-\end{lstlisting}
+\end{minted}
     protocol can also have attributes along with methods
-    \begin{lstlisting}[language=Python]
+    \begin{minted}{python}
                 from typing import Protocol
                 from uuid import UUID
     
@@ -235,13 +235,13 @@ Is like repr but no need for calling repr
     
                 def get_id(entity: HasId) -> UUID:
                     return entity.id
-    \end{lstlisting}
+    \end{minted}
 
 \section{metaclass}
     A class that defines how another class should be created in general all classes as blue prints are subclasses of Metaclass, but you can change the metaclass of a specifica class too:
     
-    \begin{lstlisting}[language=Python]
+    \begin{minted}{python}
             class MyBeautyfulClass (metaclass=MyOwnMetaClass):
                 def __init__():
                     print("test")
-    \end{lstlisting}
+    \end{minted}

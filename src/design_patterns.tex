@@ -3,7 +3,7 @@
     \section{Generating Objects}
         
         \paragraph{Factory method}
-            \begin{lstlisting}[language=Python]
+            \begin{minted}{python}
                 from abc import ABC, abstractmethod
             
                 class Document(ABC):
@@ -18,11 +18,11 @@
                     class Report(Document):
                         def create_page(self):
                             return "ReportPage"
-            \end{lstlisting}
+            \end{minted}
         
         \paragraph{Static factory method}
             
-            \begin{lstlisting}[language=Python]
+            \begin{minted}{python}
                 class Car:
                     def init(self, brand):
                         self.brand = brand
@@ -30,29 +30,29 @@
                     def toyota():
                         return Car("Toyota")
                 my_car = Car.toyota()
-            \end{lstlisting}
+            \end{minted}
         
         \paragraph{Abstarct factory}
         
         \paragraph{Simple factory}
             
-            \begin{lstlisting}[language=Python]
+            \begin{minted}{python}
                 def shape_factory(kind):
                     if kind == "circle":
                         return Circle()
                     elif kind == "square":
                         return Square()
-            \end{lstlisting}
+            \end{minted}
         
         \paragraph{Factory as a Function Object}
             
-            \begin{lstlisting}[language=Python]
+            \begin{minted}{python}
                 class ConnectionFactory:
                     def call(self, host):
                         return Connection(host)
                 factory = ConnectionFactory()
                 conn = factory("localhost")
-            \end{lstlisting}
+            \end{minted}
         
         \paragraph{Parameterized Factory}
             
@@ -62,7 +62,7 @@
         
         \paragraph{Virtual Constructor (a.k.a. Class Method Factory)}
             
-            \begin{lstlisting}[language=Python]
+            \begin{minted}{python}
                 class Shape:
                     @classmethod
                     def from_sides(cls, sides):
@@ -70,7 +70,7 @@
                                 return Triangle()
                             elif sides == 4:
                                 return Square()
-                            \end{lstlisting}
+                            \end{minted}
         
         \paragraph{Factory registry}
             
@@ -78,7 +78,7 @@
             
             
             
-            \begin{lstlisting}[language=Python]
+            \begin{minted}{python}
                 class AnimalFactory:
                     _registry: dict[str, type] = {}
                     @classmethod
@@ -111,7 +111,7 @@
                 a = AnimalFactory.create("dog")
                 b = AnimalFactory.create("cat")
                 print(a.speak()) # woof print(b.speak()) # meow
-            \end{lstlisting}
+            \end{minted}
 
 \section{Flexiable objects}
     
@@ -161,7 +161,7 @@
     
     \subsection{Adapter}
         Makes an external SDK similar to how you see the world. Translates one interface into another so code expecting a Target can use an incompatible Adaptee without changing either.
-        \begin{lstlisting}[language=Python]
+        \begin{minted}{python}
             class Adaptee:
                 def specific(self):
                     return "OK"
@@ -173,9 +173,9 @@
                     return self.a.specific()
 
             print(Adapter(Adaptee()).request())
-        \end{lstlisting}
+        \end{minted}
         A real world example
-        \begin{lstlisting}[language=Python]
+        \begin{minted}{python}
             from typing import Protocol
 
             # Target interface expected by the client
@@ -205,7 +205,7 @@
 
             gateway = StripeAdapter(StripeSDK())
             payment_id = checkout(gateway)  # works via the adapter
-        \end{lstlisting}
+        \end{minted}
 
 \section{Behavioral}
     \subsection{Observer}
