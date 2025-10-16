@@ -147,3 +147,17 @@
                 def __iter__(self) -> Iterator[T]: ...
                 def __len__(self) -> int: ...
         \end{minted}
+    
+    \paragraph{Final}
+        \begin{minted}{python}
+            @dataclass(slots=True)
+            class Pose:
+                position: Position
+                quaternion: Quaternion
+            
+                VEC_LEN: Final[int] = 7  # x y z qx qy qz qw
+        \end{minted}
+    \paragraph{Mapping}
+        \begin{minted}{python}
+             data: Mapping[str, Any] = field(default_factory=dict)
+        \end{minted}

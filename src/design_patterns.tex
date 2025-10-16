@@ -1,6 +1,6 @@
 \chapter{Design patterns}
     For each design pattern it is essential to include how we describe the same concept a design pattern explains in natural language as well
-    \section{Generating Objects}
+    \section{Creational patterns}
         
         \paragraph{Factory method}
             \begin{minted}{python}
@@ -112,6 +112,8 @@
                 b = AnimalFactory.create("cat")
                 print(a.speak()) # woof print(b.speak()) # meow
             \end{minted}
+    \paragraph{Prototype}
+        to build a copy from an existing object. So Cloning is the problem not using new. python has copy.deepcopy and shallowcopy for it
 
 \section{Flexiable objects}
     
@@ -209,3 +211,4 @@
 
 \section{Behavioral}
     \subsection{Observer}
+        whenever a set of objects must be informed about changes in each other or know of a general condition.
