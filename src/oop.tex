@@ -179,6 +179,25 @@ just to tell mypy or pycharm as a static type checker to tell the compiler to be
             print("Woof!")
 \end{minted}
 
+\section{@overload}
+    \begin{minted}{python}
+        from typing import overload, Union
+    
+    class Converter:
+        @overload
+        def parse(self, value: int) -> str: ...
+        @overload
+        def parse(self, value: str) -> int: ...
+    
+        def parse(self, value: Union[int, str]) -> Union[int, str]:
+            if isinstance(value, int):
+                return str(value)       # int → str
+            elif isinstance(value, str):
+                return int(value)       # str → int
+            else:
+                raise TypeError("Invalid type")
+    \end{minted}
+
 \section{\_\_repr\_\_}
 
 How the object is represented as as string.
@@ -206,7 +225,8 @@ Is like repr but no need for calling repr
 \section{protocol}
     To create something like interfaces in Java but without inhertitence to help mypy
     \begin{minted}{python}
-                from typing import Protocol
+                from typing import Protocol, runtime_checkable
+                @runtime_checkable
                 class Flyer(Protocol):
                     def fly(self) -> None: ...
     
@@ -236,12 +256,48 @@ Is like repr but no need for calling repr
                 def get_id(entity: HasId) -> UUID:
                     return entity.id
     \end{minted}
+    \paragraph{@runtime_checkable}
+        isinstance works in python without mypy or pyright
 
 \section{metaclass}
     A class that defines how another class should be created in general all classes as blue prints are subclasses of Metaclass, but you can change the metaclass of a specifica class too:
     
     \begin{minted}{python}
-            class MyBeautyfulClass (metaclass=MyOwnMetaClass):
-                def __init__():
-                    print("test")
+        class MyBeautyfulClass (metaclass=MyOwnMetaClass):
+            def __init__():
+                print("test")
     \end{minted}
+
+\section{Inheritence}
+    \paragraph{super()\_\_init\_\_(arguments)}
+    \subsection{Multiple inheritance}
+        \paragraph{MRO (Method Resolution Order)}
+            \begin{minted}{python}
+                class A:
+                    def __init__(self):
+                        print("A")
+                
+                class B(A):
+                    def __init__(self):
+                        print("B")
+                        super().__init__()
+                
+                class C(A):
+                    def __init__(self):
+                        print("C")
+                        super().__init__()
+                
+                class D(B, C):
+                    def __init__(self):
+                        print("D")
+                        super().__init__()
+                
+                D()
+            \end{minted}
+            And the output
+            \begin{minted}{python}
+                D
+                B
+                C
+                A
+            \end{minted}
