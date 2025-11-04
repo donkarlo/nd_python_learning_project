@@ -132,13 +132,13 @@ This is good for helping singleton classes
 
 Sending cls is obligational. It is not like
 
-\section{@classmethod}
+\section{\@classmethod}
 
 A method that gets an instance of the class , the cls, insted of self, to manipulate the structure of the the class
 
-\section{@staticmethod}
+\section{\@staticmethod}
 
-\section{@property}
+\section{\@property}
 
 Call like a property but always run a method before that
 
@@ -157,7 +157,7 @@ Call like a property but always run a method before that
     c.engine.start()
 \end{minted}
 
-\section{@override}
+\section{\@override}
 
 just to tell mypy or pycharm as a static type checker to tell the compiler to be careful that the below function is overriden so that if there is an spelling error mypy can say
 
@@ -167,35 +167,31 @@ just to tell mypy or pycharm as a static type checker to tell the compiler to be
     from typing import override
 
     class Animal:
-
-
         def speak(self) -> None:
             print("...")
 
     class Dog(Animal):
         @override
-
-    def speak(self) -> None:
-            print("Woof!")
+        def speak(self) -> None:
+                print("Woof!")
 \end{minted}
 
-\section{@overload}
+\section{\texttt{@overload}}
     \begin{minted}{python}
         from typing import overload, Union
-    
-    class Converter:
-        @overload
-        def parse(self, value: int) -> str: ...
-        @overload
-        def parse(self, value: str) -> int: ...
-    
-        def parse(self, value: Union[int, str]) -> Union[int, str]:
-            if isinstance(value, int):
-                return str(value)       # int → str
-            elif isinstance(value, str):
-                return int(value)       # str → int
-            else:
-                raise TypeError("Invalid type")
+        class Converter:
+            @overload
+            def parse(self, value: int) -> str: ...
+            @overload
+            def parse(self, value: str) -> int: ...
+        
+            def parse(self, value: Union[int, str]) -> Union[int, str]:
+                if isinstance(value, int):
+                    return str(value)       # int → str
+                elif isinstance(value, str):
+                    return int(value)       # str → int
+                else:
+                    raise TypeError("Invalid type")
     \end{minted}
 
 \section{\_\_repr\_\_}
@@ -256,7 +252,7 @@ Is like repr but no need for calling repr
                 def get_id(entity: HasId) -> UUID:
                     return entity.id
     \end{minted}
-    \paragraph{@runtime_checkable}
+    \paragraph{\@runtime\_checkable}
         isinstance works in python without mypy or pyright
 
 \section{metaclass}
