@@ -49,15 +49,41 @@
             For rational numbers
 
 \section{Mutability}
+    If the variable after the creation is modifiable or not
 
 \section{Collections}
     \subsection{Sequence}
         They have order
     
         \paragraph{list}
-        \paragraph{tuple}
+        
         \paragraph{str}
         \paragraph{range}
+    
+        \subsubsection{tuple}
+            \paragraph{Tuple type hint}
+                Tuple hint
+                \begin{minted}{python}
+                    Tuple[int,...]
+                    t: Tuple[int, str, float] = (1, "a", 3.5)
+                \end{minted}
+            \paragraph{named tuple}
+                \begin{minted}{python}
+                    from collections import namedtuple
+                    Point = namedtuple("Point", ["x", "y"])
+                    p1 = Point(10, 20)
+                    print(p1.x)  # 10
+                    print(p1.y)  # 20
+                    print(p1[0]) # 10
+                \end{minted}
+                \begin{minted}{python}
+                    from typing import NamedTuple
+                    class Point(NamedTuple):
+                        x: float
+                        y: float
+                    p = Point(1.5, 2.7)
+                    print(p.x, p.y)
+                \end{minted}
     \subsection{Shared functions}
         \paragraph{slice}
             \begin{minted}{python}
@@ -161,3 +187,4 @@
         \begin{minted}{python}
              data: Mapping[str, Any] = field(default_factory=dict)
         \end{minted}
+    
