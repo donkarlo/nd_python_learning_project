@@ -141,9 +141,17 @@
                     \item Decorations are not needed to implement \textbf{\_\_init\_\_} unless they neeed their own arguments for the \textbf{\_\_init\_\_(self, inner:Decorator, a, b, c)} in that case \textbf{super().\_\_init(inner)\_\_} must be called in \textbf{\_\_init\_\_} body.
                     \item In case a special kind of decorator can only decorate another special then \textbf{\_\_init\_\_(inner:SpecialDecoration, ...)}
                     \item if two decorators can not be used together then you probably need two set of decorators. or you need several sub classes from the Basic class
-                    \item the docoration does not need to use \mintinline{python}{self._inner.method()}, it just calls \mintinline{python}{self.method()} and it calss
-                    \item  it is always better to used passive form names for decoratars for example "diced" for something that adds dictionary abilities to inner object
+                    \item the docoration does not need to use \mintinline{python}{self.\_inner.method()}, it just calls \mintinline{python}{self.method()} and it calss
+                    \item  it is always better to used passive form names for decoratars for example \"diced\" for something that adds dictionary abilities to inner object
             \end{itemize}
+        
+        \paragraph{When to add to \_inner, when to the self in every concerete decorator?}
+            \textbf{“If I remove the decorator, should this thing still exist?”
+            \\
+            If yes → use \_inner
+            \\
+            If no → use self
+            }
         
         \paragraph{Downsides}
             \begin{itemize}
