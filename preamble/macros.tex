@@ -21,3 +21,20 @@
 %   \input{\srcabs{neuroscience/memory.tex}}
 %
 \newcommand{\srcpath}[1]{/home/donkarlo/Dropbox/repo/\projname/src/#1}
+
+% --- 4th level heading: subsubsubsection ---
+\titleclass{\subsubsubsection}{straight}[\subsubsection]
+\newcounter{subsubsubsection}[subsubsection]
+\renewcommand\thesubsubsubsection{\thesubsubsection.\arabic{subsubsubsection}}
+
+\titleformat{\subsubsubsection}
+{\normalfont\normalsize\bfseries}
+{\thesubsubsubsection}
+{1em}
+{}
+
+\titlespacing*{\subsubsubsection}
+{0pt}{1.25ex plus .2ex}{0.8ex plus .2ex}
+
+\setcounter{secnumdepth}{4}
+\setcounter{tocdepth}{4}
