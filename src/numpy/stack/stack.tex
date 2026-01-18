@@ -1,0 +1,45 @@
+\begin{minted}{python}
+    import numpy as np
+
+    a = np.array([[1, 2, 3],
+                  [4, 5, 6]])
+    
+    b = np.array([[2, 2, 3],
+                  [3, 2, 76]])
+    
+    zipped = np.stack([a, b], axis=1)
+    
+    print("a:")
+    print(a)
+    print("a.shape:", a.shape)
+    
+    print("\nb:")
+    print(b)
+    print("b.shape:", b.shape)
+    
+    print("\nzipped = np.stack([a, b], axis=1):")
+    print(zipped)
+    print("zipped.shape:", zipped.shape)
+\end{minted}
+
+output
+
+\begin{minted}{bash}
+    a:
+    [[1 2 3]
+     [4 5 6]]
+    a.shape: (2, 3)
+    
+    b:
+    [[ 2  2  3]
+     [ 3  2 76]]
+    b.shape: (2, 3)
+    
+    zipped = np.stack([a, b], axis=1):
+    [[[ 1  2  3]
+      [ 2  2  3]]
+    
+     [[ 4  5  6]
+      [ 3  2 76]]]
+    zipped.shape: (2, 2, 3)
+\end{minted}

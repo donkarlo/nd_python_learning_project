@@ -1,0 +1,11 @@
+\paragraph{reshaping}
+    Reshaping of unknow lenth from (n,) to (1,n)
+    \begin{minted}{python}
+            a = np.array(range(9))
+            a = a.reshape(1,-1)
+    \end{minted}
+    or to a column vector
+    \begin{minted}{python}
+                a = np.array(range(9))
+                a = a.reshape(-1,1)
+    \end{minted}

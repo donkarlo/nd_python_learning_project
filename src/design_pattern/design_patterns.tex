@@ -218,25 +218,3 @@
         \end{minted}
 
 \section{Behavioral}
-    \subsection{Observer}
-        whenever a set of objects must be informed about changes in each other or know of a general condition.
-        \begin{itemize}
-            \item Subscriber
-            \item Publisher
-        \end{itemize}
-        \begin{minted}{python}
-            class Subject:
-                pass
-            
-            class Subscriber(Protocol):
-                def do_something_with_new_published_subject(self, published_subject:Subject)-> None: ...
-            
-            class Publisher(Protocol):
-                _subscribers: List[Subscriber]
-            
-                def attach_subscriber(self, subscriber: Subscriber) -> None: ...
-            
-                def detach_subscriber(self, subscriber: Subscriber) -> None: ...
-            
-                def notify_subscribers(self, subject:Subject) -> None: ...
-        \end{minted}
