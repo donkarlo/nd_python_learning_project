@@ -1,7 +1,51 @@
-\part{ModuleType}
-For modules (ie a file with many functions or classes)  that you want to refer to all of the at once such az \pyl{import matplotlib.pyplot as plt} the only way is to use
+\paragraph{Annotated}
+   with this type you can put comments for example in the following example x muist be positive
 \begin{minted}{python}
+      from typing import Annotated
+      x: Annotated[int, "positive"] = 42
+   \end{minted}
+   with fast API, this example say that the integer myst be between 0 and 100
+\begin{minted}{python}
+      from typing import Annotated
+      from fastapi import Query
+      
+      def get_items(limit: Annotated[int, Query(gt=0, lt=100)]):
+          return {"limit": limit}
+   \end{minted}
+
+\paragraph{Optional}
+   
+   When the type is a class object or None
+
+\begin{minted}{python}
+      ->Optional[CommentedMap]
+   \end{minted}
+   
+   The above code says the return is either CommentedMap or None
+
+\paragraph{Generic}
+\begin{minted}{python}
+      from typing import Generic, TypeVar, Protocol
+      T = TypeVar("T")
+      class Unit(Protocol, Generic[T]):
+          def __iter__(self) -> Iterator[T]: ...
+          def __len__(self) -> int: ...
+   \end{minted}
+
+
+
+\paragraph{Mapping}
+\begin{minted}{python}
+       data: Mapping[str, Any] = field(default_factory=dict)
+   \end{minted}
+
+
+\paragraph{ModuleType}
+   For modules (ie a file with many functions or classes)  that you want to refer to all of the at once such az \pyl{import matplotlib.pyplot as plt} the only way is to use
+   \begin{minted}{python}
    from types import ModuleType
 
-plt: ModuleType
-\end{minted}
+   plt: ModuleType
+   \end{minted}
+
+\paragraph{Final}

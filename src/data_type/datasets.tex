@@ -1,0 +1,29 @@
+\begin{minted}{python}
+    @dataclass(init=True)
+    # this one generates __init__ automatically
+    
+    @dataclass(repr=True)
+    # this one generates __repr__ for readable object printing
+    
+    @dataclass(eq=True)
+    # this one enables equality comparison based on fields
+    
+    @dataclass(order=True)
+    # this one enables ordering comparisons (<, <=, >, >=)
+    
+    @dataclass(unsafe_hash=True)
+    # this one generates __hash__ even if the class is mutable
+    
+    @dataclass(frozen=True)
+    # this one makes the instance immutable after creation
+    
+    @dataclass(match_args=True)
+    # this one enables positional pattern matching support
+    
+    @dataclass(kw_only=True)
+    # this one forces all fields to be keyword-only
+    
+    @dataclass(slots=True)
+    # this one uses __slots__ to reduce memory usage
+\end{minted}
+

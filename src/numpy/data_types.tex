@@ -1,0 +1,8 @@
+To enforce a that x is only formed of numbers
+\begin{minted}{python}
+    import numpy as np
+    import numpy.typing as npt
+    
+    def f(x: npt.NDArray[np.number]) -> None:
+        ...
+\end{minted}

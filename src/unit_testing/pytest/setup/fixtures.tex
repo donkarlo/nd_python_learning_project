@@ -1,0 +1,48 @@
+\begin{minted}{python}
+    import numpy as np
+import pytest
+from mathx.number.kind.real.interval.unit.open_unit_interval import OpenUnitInterval
+from mathx.statistic.population.kind.countable.finite.member_mentioned.numbered import Numbered
+
+
+@pytest.fixture
+def population():
+    return Numbered(np.array([
+        [1, 2],
+        [2, 3],
+        [3, 1],
+        [4, 2],
+        [5, 3],
+        [3, 4],
+        [2, 5],
+        [4, 4],
+        [10, 10],
+        [11, 9],
+        [12, 11],
+        [13, 10],
+        [14, 12],
+        [15, 11],
+        [16, 13],
+        [17, 12],
+        [18, 14],
+        [19, 13],
+        [20, 15],
+        [21, 14],
+        [22, 16],
+        [23, 15],
+        [24, 17],
+    ]))
+
+
+    class TestNumbered:
+        def test_random_sample_and_complement_by_ratio(self, population):
+            open_unit_interval = OpenUnitInterval(0.7)
+            partition = population.get_random_sample_and_complement_by_ratio(open_unit_interval)
+    
+            subset = partition.get_subset()
+            complement = partition.get_complement()
+    
+            for subset_member in subset.get_members():
+                assert not np.any(np.all(complement.get_members() == subset_member, axis=1))
+
+\end{minted}

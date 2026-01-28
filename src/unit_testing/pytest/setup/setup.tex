@@ -1,0 +1,14 @@
+once for each test
+\begin{minted}{python}
+    class TestNumbered:
+    def setup_method(self):
+        self._population = Numbered(np.array([...]))
+\end{minted}
+
+once for a whole class
+\begin{minted}{python}
+    class TestNumbered:
+    @classmethod
+    def setup_class(cls):
+        cls._population = Numbered(np.array([...]))
+\end{minted}
