@@ -1,0 +1,10 @@
+one\_period\_members\_count = 24450
+ram = storage.get\_ram()[:, 1:]  # (T, 3)
+
+usable\_len = (len(ram) // one\_period\_members\_count) * one\_period\_members\_count
+ram = ram[:usable\_len]
+
+partition\_count = len(ram) // one\_period\_members\_count
+
+# shape = (partition\_count, one\_period\_members\_count, 3)
+partitioned\_population = ram.reshape(partition\_count, one\_period\_members\_count, ram.shape[1])
