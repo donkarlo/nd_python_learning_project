@@ -1,2 +1,117 @@
-\url{https://www.geeksforgeeks.org/system-design/chain-responsibility-design-pattern/}
-\url{https://refactoring.guru/design-patterns/chain-of-responsibility}
+\documentclass{article}
+\usepackage{geometry}
+\usepackage{minted}
+\usepackage{xcolor}
+
+\geometry{margin=1in}
+
+\title{Chain of Responsibility Pattern}
+
+\begin{document}
+    
+    \maketitle
+    
+    
+    \section{Definition}
+        \url{https://www.geeksforgeeks.org/system-design/chain-responsibility-design-pattern/}
+        \url{https://refactoring.guru/design-patterns/chain-of-responsibility}
+    
+        
+        The \textbf{Chain of Responsibility} is a behavioral design pattern.
+        It allows multiple objects to handle a request without the sender
+        knowing which object will process it.
+        
+        A request is passed along a chain of handlers.
+        Each handler decides:
+        
+        \begin{itemize}
+            \item If it can handle the request, it processes it.
+            \item Otherwise, it forwards the request to the next handler.
+        \end{itemize}
+        
+        In simple words:
+        
+        \begin{quote}
+            Either I handle it, or I pass it to the next one.
+        \end{quote}
+    
+    
+    \section{Simple Python Example}
+        
+        Suppose we have three roles approving vacation requests:
+        
+        \begin{itemize}
+            \item Supervisor: up to 1 day
+            \item Manager: up to 5 days
+            \item CEO: any number of days
+        \end{itemize}
+        
+        \subsection{Implementation}
+            
+            \begin{minted}[fontsize=\small, linenos]{python}
+class Handler:
+    def __init__(self, next_handler=None):
+        self.next_handler = next_handler
+
+    def handle(self, days):
+        if self.next_handler:
+            return self.next_handler.handle(days)
+        return "No one can handle this request"
+
+
+class Supervisor(Handler):
+    def handle(self, days):
+        if days <= 1:
+            return "Supervisor approved"
+        return super().handle(days)
+
+
+class Manager(Handler):
+    def handle(self, days):
+        if days <= 5:
+            return "Manager approved"
+        return super().handle(days)
+
+
+class CEO(Handler):
+    def handle(self, days):
+        return "CEO approved"
+            \end{minted}
+        
+        \subsection{Building the Chain}
+            
+            \begin{minted}[fontsize=\small, linenos]{python}
+chain = Supervisor(
+            Manager(
+                CEO()
+            )
+        )
+
+print(chain.handle(1))   # Supervisor approved
+print(chain.handle(3))   # Manager approved
+print(chain.handle(10))  # CEO approved
+            \end{minted}
+    
+    
+    \section{Core Idea}
+        
+        Each handler:
+        
+        \begin{itemize}
+            \item Holds a reference to the next handler
+            \item Decides whether to process the request
+            \item Forwards the request if it cannot handle it
+        \end{itemize}
+    
+    
+    \section{Compilation Note}
+        
+        To compile this document, you must enable shell escape:
+        
+        \begin{minted}[fontsize=\small]{bash}
+pdflatex -shell-escape yourfile.tex
+        \end{minted}
+
+\end{document}
+
+

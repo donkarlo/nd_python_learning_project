@@ -1,0 +1,29 @@
+\documentclass[varwidth,border=10pt]{standalone}
+
+\usepackage{amsmath,amssymb}
+
+\begin{document}
+Threading is not real multi threading on CPU
+\begin{minted}{python}
+    import threading
+
+class MyClass:
+    def method_one(self):
+        print("one")
+
+    def method_two(self):
+        print("two")
+
+    obj = MyClass()
+    
+t1 = threading.Thread(target=obj.method_one)
+t2 = threading.Thread(target=obj.method_two)
+
+t1.start()
+t2.start()
+
+t1.join()
+t2.join()
+\end{minted}
+
+\end{document}

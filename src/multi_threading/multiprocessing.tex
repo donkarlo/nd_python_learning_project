@@ -1,0 +1,29 @@
+\documentclass[varwidth,border=10pt]{standalone}
+
+\usepackage{amsmath,amssymb}
+\usepackage{minted}
+
+\begin{document}
+\begin{minted}{python}
+from multiprocessing import Process
+class MyClass:
+    def method_one(self):
+        print("method one running")
+
+    def method_two(self):
+        print("method two running")
+
+# this  if __name__ == "__main__": is obligational
+if __name__ == "__main__":
+    obj = MyClass()
+
+    p1 = Process(target=obj.method_one)
+    p2 = Process(target=obj.method_two)
+
+    p1.start()
+    p2.start()
+
+    p1.join()
+    p2.join()
+\end{minted}
+\end{document}
