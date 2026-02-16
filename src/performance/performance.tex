@@ -1,0 +1,69 @@
+\documentclass{article}
+
+\title{Measuring Runtime, CPU, RAM, and Other Resource Usage in Python}
+\date{}
+\begin{document}
+    \maketitle
+    
+    
+    \section{Goal}
+        Measure execution time and resource usage (CPU, RAM, and optionally I/O) from the start of a program until the end, and optionally retrieve the measurements at any intermediate point. Persist the collected data to disk (e.g., at program exit or at checkpoints).
+    
+    
+    \section{Time Measurement}
+        
+        \subsection{Wall-Clock Time (Elapsed Real Time)}
+            Use \texttt{time.perf\_counter()} to measure elapsed real time.
+            It is suitable for benchmarking and includes waiting time (e.g., I/O waits and sleep).
+        
+        \subsection{CPU Time (Process CPU Consumption)}
+            Use \texttt{time.process\_time()} to measure CPU time consumed by the current process.
+            It excludes time when the process is not executing on CPU.
+    
+    
+    \section{Memory Measurement (RAM)}
+        
+        \subsection{Python-Level Allocations (Inside the Python Interpreter)}
+            Use \texttt{tracemalloc} (standard library) to track memory allocations attributed to Python code.
+            This is useful to understand where Python memory grows over time and to take snapshots at checkpoints.
+            It does not directly represent the full resident set size (RSS) of the process.
+        
+        \subsection{Process-Level Memory on Unix Systems}
+            On Unix-like systems, the \texttt{resource} module can provide process resource statistics.
+            A common metric is \texttt{ru\_maxrss}, which reports the maximum resident set size observed.
+            Units can be platform-dependent (on Linux it is commonly KiB).
+        
+        \subsection{Comprehensive Process Metrics}
+            The \texttt{psutil} library is commonly used for accurate and convenient process metrics.
+            It can report RSS/VMS memory, CPU usage, thread counts, and I/O counters for the current process (via its PID).
+            For most practical needs involving CPU and RAM over time, \texttt{psutil} is the most straightforward option.
+    
+    
+    \section{Collecting Data Over the Entire Runtime}
+        
+        \subsection{Checkpoint-Based Collection}
+            Record a measurement at specific points (manual checkpoints).
+            This is appropriate when only a few milestones matter (e.g., after loading data, after training, after evaluation).
+        
+        \subsection{Periodic Sampling}
+            Run a lightweight sampler that records metrics every N seconds throughout execution.
+            This enables computing overall summaries such as peak memory, average CPU usage, and time-series plots of resource usage.
+    
+    
+    \section{Persisting Measurements to Disk}
+        
+        \subsection{Common Output Formats}
+            CSV is convenient for quick inspection and plotting.
+            JSON Lines (JSONL) is robust for long-running logs, with one JSON record per line.
+            SQLite is useful when you want structured storage and queries over measurements.
+        
+        \subsection{End-of-Program Summary}
+            In addition to raw samples, write a summary at program termination (e.g., total elapsed time, total CPU time, peak RSS, and any relevant aggregates derived from samples).
+    
+    
+    \section{Practical Recommendation}
+        For measuring CPU and RAM from start to finish and retrieving values at any moment, combine:
+        Wall-clock timing via \texttt{time.perf\_counter()} with process metrics via \texttt{psutil}.
+        For diagnosing Python allocation growth and identifying sources of memory increase within Python code, add \texttt{tracemalloc} snapshots at selected checkpoints.
+
+\end{document}
