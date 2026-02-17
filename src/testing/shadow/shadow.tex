@@ -1,0 +1,34 @@
+\documentclass[a4paper]{article}
+\usepackage{graphicx}
+\usepackage{amsmath,amssymb}
+\usepackage{hyperref}
+\usepackage{minted}
+
+\title{}
+\date{}
+\begin{document}
+    \maketitle
+    Shadow testing, sometimes called traffic mirroring, is a deployment strategy in which a new model is deployed alongside the current production model. The new model receives the same real production requests as the live model. However, its outputs are not returned to users.
+    
+    Instead, the outputs are logged and compared offline with those of the production model using predefined metrics such as:
+    
+    \begin{itemize}
+        \item Accuracy or task-specific performance
+        \item Hallucination rate
+        \item Latency
+        \item Cost per request
+        \item Safety and policy compliance
+    \end{itemize}
+    
+    The key characteristics of shadow testing are:
+    
+    \begin{itemize}
+        \item Users do not see the new model’s outputs.
+        \item There is no user-facing risk.
+        \item It enables realistic evaluation under real traffic.
+    \end{itemize}
+    
+    Shadow testing is typically used before exposing any users to the new system.
+
+
+\end{document}
