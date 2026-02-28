@@ -1,0 +1,129 @@
+\documentclass[a4paper]{article}
+\usepackage{graphicx}
+\usepackage{amsmath,amssymb}
+\usepackage{hyperref}
+\usepackage{minted}
+\usepackage{multirow}
+
+\title{}
+\date{}
+\begin{document}
+    \maketitle
+    
+    
+    \section{Creational patterns}
+        
+        \paragraph{Factory method}
+            \begin{minted}{python}
+                from abc import ABC, abstractmethod
+            
+                class Document(ABC):
+                    @abstractmethod
+                    def create_page(self):
+                            pass
+            
+                    class Resume(Document):
+                        def create_page(self):
+                            return "ResumePage"
+            
+                    class Report(Document):
+                        def create_page(self):
+                            return "ReportPage"
+            \end{minted}
+        
+        \paragraph{Static factory method}
+            
+            \begin{minted}{python}
+                class Car:
+                    def init(self, brand):
+                        self.brand = brand
+                    @staticmethod
+                    def toyota():
+                        return Car("Toyota")
+                my_car = Car.toyota()
+            \end{minted}
+        
+        \paragraph{Abstarct factory}
+        
+        \paragraph{Simple factory}
+            
+            \begin{minted}{python}
+                def shape_factory(kind):
+                    if kind == "circle":
+                        return Circle()
+                    elif kind == "square":
+                        return Square()
+            \end{minted}
+        
+        \paragraph{Factory as a Function Object}
+            
+            \begin{minted}{python}
+                class ConnectionFactory:
+                    def call(self, host):
+                        return Connection(host)
+                factory = ConnectionFactory()
+                conn = factory("localhost")
+            \end{minted}
+        
+        \paragraph{Parameterized Factory}
+            
+            Factory methods that accept parameters to configure the returned object.
+            
+            Often combined with dependency injection.
+        
+        \paragraph{Virtual Constructor (a.k.a. Class Method Factory)}
+            
+            \begin{minted}{python}
+                class Shape:
+                    @classmethod
+                    def from_sides(cls, sides):
+                            if sides == 3:
+                                return Triangle()
+                            elif sides == 4:
+                                return Square()
+            \end{minted}
+        
+        \paragraph{Factory registry}
+            
+            The factory registry pattern is just a way to avoid a big if/elif chain by keeping a dictionary of “keys → constructor functions”. It’s basically a lookup table for creating objects.
+            
+            
+            
+            \begin{minted}{python}
+                class AnimalFactory:
+                    _registry: dict[str, type] = {}
+                    @classmethod
+                    def register(cls, name: str, animal_cls: type) -> None:
+                        """Register a
+                    class under a given name."""
+                        cls._registry[name.lower()] = animal_cls
+            
+                    @classmethod
+                    def create(cls, name: str, *args, **kwargs):
+                        """Create an instance of the registered class."""
+                        animal_cls = cls._registry.get(name.lower())
+                        if animal_cls is None:
+                            raise ValueError(f"Unknown animal type: {name}")
+                        return animal_cls(*args, **kwargs)
+            
+                # Example classes
+                class Dog:
+                    def speak(self):
+                        return "woof"
+            
+                class Cat:
+                    def speak(self):
+                        return "meow"
+            
+                # Register them
+                AnimalFactory.register("dog", Dog)
+                AnimalFactory.register("cat", Cat)
+                # Usage
+                a = AnimalFactory.create("dog")
+                b = AnimalFactory.create("cat")
+                print(a.speak()) # woof print(b.speak()) # meow
+            \end{minted}
+        
+        \paragraph{Prototype}
+            to build a copy from an existing object. So Cloning is the problem not using new. python has copy.deepcopy and shallowcopy for it
+\end{document}

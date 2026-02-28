@@ -1,7 +1,7 @@
 from typing import Any
 
-from src.code_clip.decorator.decorator import Decorator
-from src.code_clip.decorator.interface import Interface
+from src.code_clip.decoration.decorator import Decorator
+from src.code_clip.decoration.interface import Interface
 
 
 class Decoration(Decorator):

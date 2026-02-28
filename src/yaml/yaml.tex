@@ -1,24 +1,22 @@
-\section{Yaml}
-    
-    \subsection{Inline dictionaries}
-    
-    \subsection{Lists}
-        \begin{minted}{yaml}
-            homogeneity:
-              - name: "homogeneous"
-                description: "All robots have the same model and sensors"
-              - name: "heterogeneous"
-                description: "Robots have different models or sensor setups"
-        \end{minted}
-        and then in python you can call
-        \begin{minted}{python}
-            print(data["homogeneity"][0]["name"])         # homogeneous
-            print(data["homogeneity"][0]["description"])  # All robots have the same model and sensors
-            
-            print(data["homogeneity"][1]["name"])         # heterogeneous
-            print(data["homogeneity"][1]["description"])  # Robots have different models or sensor setups
-        \end{minted}
+\section{Inline dictionaries}
+
+\section{Lists}
+    \begin{minted}{yaml}
+        homogeneity:
+          - name: "homogeneous"
+            description: "All robots have the same model and sensors"
+          - name: "heterogeneous"
+            description: "Robots have different models or sensor setups"
+    \end{minted}
+    and then in python you can call
+    \begin{minted}{python}
+        print(data["homogeneity"][0]["name"])         # homogeneous
+        print(data["homogeneity"][0]["description"])  # All robots have the same model and sensors
         
-        \begin{minted}{python}
-        
-        \end{minted}
+        print(data["homogeneity"][1]["name"])         # heterogeneous
+        print(data["homogeneity"][1]["description"])  # Robots have different models or sensor setups
+    \end{minted}
+    
+    \begin{minted}{python}
+    
+    \end{minted}

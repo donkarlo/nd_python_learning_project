@@ -1,0 +1,68 @@
+\documentclass[a4paper]{article}
+\usepackage{graphicx}
+\usepackage{amsmath,amssymb}
+\usepackage{hyperref}
+\usepackage{minted}
+\usepackage{multirow}
+
+\title{}
+\date{}
+\begin{document}
+    \maketitle
+    It reminds me of a programming language called Lisp \textbf{}
+    
+    
+    \section{Usecases}
+        Decorator in python canz both be used for
+        \begin{itemize}
+            \item overwriting methods and properties similar to inheritence but from core to skin
+            \item add extra methods and properties
+        \end{itemize}
+    
+    
+    \section{Downsides}
+        Repetition of method definitions in Decorator
+        
+    \section{UML}
+    
+    \section{usecase:}
+        \begin{itemize}
+            \item Adding methods to a basic object
+            \item Changing the behavior of a basic object
+        \end{itemize}
+    
+    \section{Implementation}
+        \begin{itemize}
+            \item Interface: The genetic of what is trying to be modeled
+            \item Abstract class \textbf{Decoratr} inherits(implements) from \textbf{Interface}, this class is the genetics of being the concept of a decoration. It composes a protected \textbf{\_inner} property of type Interface. What ever method or property of it is called, it calls the same method on the \textbf{\_inner}
+            \item Decorations are the classes who inherit from \textit{Decorator}. Either they implement a method or from the Decorator or if that method doesnt exist automatically , according to inheritance rules, once again \textbf{Decorator.\_inner.method or .property} will send it to next, more inner method or property. Another option is
+        \end{itemize}
+    
+    \section{Notes}
+        \begin{itemize}
+            \item Decoration reimplements inheritince in horizentally as real inheritance does it vertically. Or maybe it is better to say that it gives us a second utility for inhertitence
+            \item Decorations are not needed to implement \textbf{\_\_init\_\_} unless they neeed their own arguments for the \textbf{\_\_init\_\_(self, inner:Decorator, a, b, c)} in that case \textbf{super().\_\_init(inner)\_\_} must be called in \textbf{\_\_init\_\_} body.
+            \item In case a special kind of decorator can only decorate another special then \textbf{\_\_init\_\_(inner:SpecialDecoration, ...)}
+            \item if two decorators can not be used together then you probably need two set of decorators. or you need several sub classes from the Basic class
+            \item the docoration does not need to use \mintinline{python}{self.\_inner.method()}, it just calls \mintinline{python}{self.method()} and it calss
+            \item  it is always better to used passive form names for decoratars for example \"diced\" for something that adds dictionary abilities to inner object
+        \end{itemize}
+    
+    \section{When to add to \_inner, when to the self in every concerete decorator?}
+        \textbf{“If I remove the decorator, should this thing still exist?”
+        \\
+        If yes → use \_inner
+        \\
+        If no → use self
+        }
+    
+    \section{Downsides}
+        \begin{itemize}
+            \item sometime two decorators are inconsistenet with each other
+        \end{itemize}
+    
+    \section{Ralation with natural language}
+        \begin{itemize}
+            \item The question is if and how we describe decorated concepts in natural language
+        \end{itemize}
+\end{document}

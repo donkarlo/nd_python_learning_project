@@ -1,17 +1,39 @@
-\section{settings}
-    \subsection{Editor}
-        \paragraph{Live templates}
-            for example if you want that whenever you type ``py`` in .tex files you see a suggestion for
-        \begin{minted}{latex}
-                \\begin\{minted\}\{python\}
-                    s
-                \\end\{minted\}
-            \end{minted}
-            just go to \textit{settings>editor>live templates>}
-            and then from the right panel find latex and add ``mnt`` with the code you want. Do not forget to mark reformat and assign \textit{application} to it from low right panel
-\section{Bug report}
-    \url{https://youtrack.jetbrains.com/issues/PY}
+\documentclass[a4paper]{article}
+\usepackage{graphicx}
+\usepackage{amsmath,amssymb}
+\usepackage{hyperref}
+\usepackage{minted}
+\usepackage{multirow}
+\input{/home/donkarlo/Dropbox/repo/nd_semiotic_project/src/nd_semiotic/language/natural/corpus/structured/kind/hierarchical/kind/tex/sectioning/additional.tex}
 
-\section{Adding a file template to appear in project view right click}
-File>settings>editor>File and code templates
+\title{Pycharm}
+\date{}
+\begin{document}
+    \maketitle
+    \section{settings}
+        
+        \subsection{Editor}
+            
+            \paragraph{Live templates}
+                for example if you want that whenever you type ``py`` in .tex files you see a suggestion for
+            \begin{verbatim}
+                \begin{minted}{python}
+                    python_code()
+                \end{minted}
+            \end{verbatim}
+                just go to \textit{settings>editor>live templates>}
+                and then from the right panel find latex and add ``mnt`` with the code you want. Do not forget to mark reformat and assign \textit{application} to it from low right panel
+        
+        \subsection{Python}
+            \subsubsection{Tool}
+                \subsubsubsection{integrated tools}
+                    \subsubsubsubsection{Docstring}
     
+    
+    \section{Bug report}
+    \url{https://youtrack.jetbrains.com/issues/PY}
+    
+    
+    \section{Adding a file template to appear in project view right click}
+    File>settings>editor>File and code templates
+\end{document}
