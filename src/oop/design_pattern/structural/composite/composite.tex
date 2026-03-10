@@ -16,8 +16,13 @@
         \end{enumerate}
     \section{Usecase example}
         Imagine you need to compute the price of a product which is by itself built hierarchachily of other products. As such each node either a leaf or a composite should be able to compute its price. so compute price is shared between bothe leaf and composite and as such component has a shared method ``compute\_price``. At this point you know that you need a composite pattern
+        
+        
     \section{Usecases}
         \begin{itemize}
+            \item A good variation of Builder pattern when you can add gradually the parameters that you wanted to add in \verb|__init__()|
+            \item Composite is to simulate one to many or universal relationship. when an object has the same relationship with all memebers of another group then its time use composute pattern
+            \item when the raltion chachges within the same composite, then just extend composite class for that change. see roboti society leader followers or container kind as an example
             \item When there is at least one method which must be shared between al composites and leaves
             \item Whenever you need two objects of the same class somewhere as the direct child of a composite. If you need one object of a class type you definite need normal composition whcih can be done using therough the contructor of a class. In most cases you need composition even if there are multiple chilfren of the same class by simply using a list.
         \end{itemize}
