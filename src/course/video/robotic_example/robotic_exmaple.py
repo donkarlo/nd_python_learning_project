@@ -1,1 +1,0 @@
-# A simplified robotic example
