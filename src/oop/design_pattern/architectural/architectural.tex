@@ -1,0 +1,143 @@
+\documentclass[a4paper]{article}
+
+\usepackage{graphicx}
+\usepackage{amsmath,amssymb}
+\usepackage{minted}
+\usepackage{multirow}
+\usepackage{float}
+\usepackage{todonotes}
+\usepackage{forest}
+\usepackage{xstring}
+\usepackage{xcolor}
+\usepackage[most]{tcolorbox}
+\usepackage{xparse}
+\usepackage{natbib}
+
+\usetikzlibrary{graphs,graphdrawing}
+\usegdlibrary{layered}
+
+% for external graphviz
+\input{/home/donkarlo/Dropbox/repo/nd_ai_project/src/nd_ai/knoweldge_representation/language/formal/computer/programming/tex/latex/code_clips/external_graphviz.tex}
+
+% for tags
+\input{/home/donkarlo/Dropbox/repo/nd_ai_project/src/nd_ai/knoweldge_representation/language/formal/computer/programming/tex/latex/parts/control_sequence/kinds/semtag/semtag.tex}
+
+% for links
+\input{/home/donkarlo/Dropbox/repo/nd_ai_project/src/nd_ai/knoweldge_representation/language/formal/computer/programming/tex/latex/code_clips/seehere.tex}
+
+\title{Architectural design patterns}
+\date{}
+
+\begin{document}
+    \maketitle
+    
+    
+    \section{Layered Architecture}
+        This architecture is useful when a system can be separated into clear responsibilities such as presentation, business logic, and data access.
+        It is common in enterprise applications, CRUD systems, and web backends where maintainability and separation of concerns are important.
+        It works well when each layer should depend mainly on the layer below it and when strict structural order is desired.
+    
+    
+    \section{Client--Server}
+        This architecture is useful when many users or devices need to request services or data from a central system.
+        It is common in web applications, database systems, email systems, and networked applications in general.
+        It works well when centralized control, authentication, storage, or coordination is needed.
+    
+    
+    \section{Microservices}
+        This architecture is useful when a large system must be split into small independently deployable services.
+        It is common in large-scale web platforms, cloud-native systems, and organizations with multiple development teams.
+        It works well when different parts of the system need separate scaling, deployment, or technology choices.
+    
+    
+    \section{Monolithic Architecture}
+        This architecture is useful when the system is relatively small or when simplicity of development and deployment is preferred.
+        It is common in early-stage products, internal tools, and applications built by small teams.
+        It works well when tight integration between components is acceptable and operational complexity should be minimized.
+    
+    
+    \section{Event-Driven Architecture}
+        This architecture is useful when components should react to events instead of relying only on direct synchronous calls.
+        It is common in monitoring systems, financial systems, IoT platforms, and systems with asynchronous workflows.
+        It works well when loose coupling, responsiveness, and extensibility of reactions are important.
+    
+    
+    \section{Publish--Subscribe}
+        This architecture is useful when one component should broadcast information to many others without knowing them directly.
+        It is common in messaging systems, notification systems, user activity streams, and distributed platforms.
+        It works well when producers and consumers must remain decoupled in time and structure.
+    
+    
+    \section{Broker Architecture}
+        This architecture is useful when communication between distributed components should be mediated by a central coordination mechanism.
+        It is common in middleware systems, message-oriented systems, and service integration platforms.
+        It works well when routing, discovery, protocol translation, or indirect interaction is required.
+    
+    
+    \section{Pipes and Filters}
+        This architecture is useful when data should pass through a sequence of independent processing stages.
+        It is common in compilers, ETL pipelines, signal processing, and data transformation workflows.
+        It works well when each stage can be developed, reused, tested, and replaced independently.
+    
+    
+    \section{Model--View--Controller}
+        This architecture is useful when user interface concerns must be separated from domain logic and input handling.
+        It is common in web frameworks, desktop GUI systems, and applications with interactive views.
+        It works well when the same model may support multiple views or when UI structure needs disciplined separation.
+    
+    
+    \section{Model--View--ViewModel}
+        This architecture is useful when UI components depend heavily on data binding and state synchronization.
+        It is common in modern desktop and mobile frameworks that support declarative interfaces and binding mechanisms.
+        It works well when view logic should be separated from domain logic while keeping the UI reactive.
+    
+    
+    \section{Hexagonal Architecture}
+        This architecture is useful when the domain core must remain independent from databases, user interfaces, and external services.
+        It is common in systems that emphasize testability, long-term maintainability, and infrastructure independence.
+        It works well when external components should plug into the system through explicit ports and adapters.
+    
+    
+    \section{Clean Architecture}
+        This architecture is useful when core business rules must be protected from framework and infrastructure changes.
+        It is common in long-lived systems, enterprise software, and codebases that require strong dependency control.
+        It works well when dependencies should point inward toward stable policies rather than outward toward tools.
+    
+    
+    \section{Onion Architecture}
+        This architecture is useful when domain logic should sit at the center and infrastructure should remain peripheral.
+        It is common in domain-driven systems and backend applications with strong emphasis on model purity.
+        It works well when the system should be organized in concentric layers with the domain isolated from external concerns.
+    
+    
+    \section{Service-Oriented Architecture}
+        This architecture is useful when a system is built from reusable business services that may be shared across organizational boundaries.
+        It is common in large enterprises, institutional IT environments, and systems integrating many legacy applications.
+        It works well when interoperability, formal service contracts, and cross-department integration are important.
+    
+    
+    \section{Peer-to-Peer}
+        This architecture is useful when nodes should communicate directly and share responsibilities without a permanent central server.
+        It is common in file-sharing systems, decentralized networks, and some blockchain-related infrastructures.
+        It works well when decentralization, fault tolerance, and distributed resource sharing are desired.
+    
+    
+    \section{Master--Worker}
+        This architecture is useful when a large task can be divided into smaller jobs and distributed among multiple workers.
+        It is common in parallel computing, batch processing, rendering farms, and distributed computation systems.
+        It works well when coordination is centralized but execution should be parallelized for throughput or speed.
+    
+    
+    \section{Space-Based Architecture}
+        This architecture is useful when a system must handle very high load without relying heavily on a single central database.
+        It is common in large-scale transactional systems, real-time platforms, and systems requiring elastic scalability.
+        It works well when application state and processing can be distributed across in-memory data grids.
+    
+    
+    \section{Blackboard Architecture}
+        This architecture is useful when multiple specialized components must contribute partial knowledge to solve a complex problem.
+        It is common in AI systems, signal interpretation, speech understanding, and complex decision-support systems.
+        It works well when no single control strategy is sufficient and problem solving must emerge from shared knowledge updates.
+        \bibliographystyle{plainnat}
+        \bibliography{/home/donkarlo/Dropbox/repo/nd_shared_research/bibliography/bibliography.bib}
+\end{document}

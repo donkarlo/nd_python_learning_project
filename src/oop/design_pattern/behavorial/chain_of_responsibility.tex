@@ -13,16 +13,10 @@
     
     
     \section{Definition}
-        \url{https://www.geeksforgeeks.org/system-design/chain-responsibility-design-pattern/}
         \url{https://refactoring.guru/design-patterns/chain-of-responsibility}
-    
         
-        The \textbf{Chain of Responsibility} is a behavioral design pattern.
-        It allows multiple objects to handle a request without the sender
-        knowing which object will process it.
         
-        A request is passed along a chain of handlers.
-        Each handler decides:
+        Chain of Responsibility is a behavioral design pattern that lets you pass requests along a chain of handlers. Upon receiving a request, each handler decides either to process the request or to pass it to the next handler in the chain.
         
         \begin{itemize}
             \item If it can handle the request, it processes it.
