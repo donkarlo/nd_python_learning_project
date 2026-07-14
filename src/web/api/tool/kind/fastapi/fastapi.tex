@@ -1,0 +1,460 @@
+\PassOptionsToPackage{table}{xcolor}
+\documentclass[a4paper]{article}
+
+\usepackage[margin=1.8cm]{geometry}
+\usepackage{graphicx}
+\usepackage{amsmath,amssymb}
+\usepackage{minted}
+\usepackage{multirow}
+\usepackage{float}
+\usepackage{todonotes}
+\usepackage{forest}
+\usepackage{xstring}
+\usepackage{xcolor}
+\usepackage[most]{tcolorbox}
+\usepackage{xparse}
+\usepackage{natbib}
+
+% Packages used for responsive tables and text wrapping
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{array}
+\usepackage{ragged2e}
+\usepackage{microtype}
+\usepackage[hidelinks]{hyperref}
+
+\usetikzlibrary{graphs,graphdrawing}
+\usegdlibrary{layered}
+
+% for external graphviz
+\input{/home/donkarlo/Dropbox/repo/nd_ai_project/src/nd_ai/knoweldge_representation/language/formal/computer/programming/tex/latex/code_clips/external_graphviz.tex}
+
+% for tags
+\input{/home/donkarlo/Dropbox/repo/nd_ai_project/src/nd_ai/knoweldge_representation/language/formal/computer/programming/tex/latex/parts/control_sequence/kind/semtag/semtag.tex}
+
+% for links
+\input{/home/donkarlo/Dropbox/repo/nd_ai_project/src/nd_ai/knoweldge_representation/language/formal/computer/programming/tex/latex/code_clips/seehere.tex}
+
+% ------------------------------------------------
+% Document style
+% ------------------------------------------------
+
+\definecolor{headerblue}{HTML}{1F3A5F}
+\definecolor{rowgray}{HTML}{F3F5F7}
+\definecolor{lightblue}{HTML}{EEF4FA}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt}
+\setlength{\emergencystretch}{3em}
+
+\renewcommand{\arraystretch}{1.35}
+
+\newcolumntype{Y}{>{\RaggedRight\arraybackslash}X}
+\newcolumntype{T}{>{\RaggedRight\arraybackslash}p{3.2cm}}
+
+\title{
+    \textbf{FastAPI and Django}\[4pt]
+        {\large Their Purpose, Differences, and Relationship}
+}
+\date{}
+\author{Mohammad Rahmani}
+
+\begin{document}
+    
+    \maketitle
+    
+    
+    \section*{What Is FastAPI?}
+        
+        FastAPI is an independent Python web framework designed primarily for
+        building web APIs.
+        
+        An API allows another program, frontend application, mobile application,
+        or machine-learning service to communicate with the backend through
+        HTTP requests.
+        
+        FastAPI helps a developer define:
+        
+        \begin{itemize}
+            \item API addresses such as \texttt{/users} or \texttt{/predict};
+            \item accepted input parameters;
+            \item expected data types;
+            \item validation rules;
+            \item JSON responses;
+            \item error responses;
+            \item automatic API documentation.
+        \end{itemize}
+        
+        FastAPI uses normal Python type hints to understand the expected input
+        and output data. It can automatically validate incoming data and reject
+        invalid requests before they reach the main application logic.
+        
+        \begin{tcolorbox}[
+            colback=lightblue,
+            colframe=headerblue,
+            title=\textbf{Important},
+            fonttitle=\bfseries,
+            breakable
+        ]
+            FastAPI is not a deployment tool like Docker.
+            
+            FastAPI is used to write the API application itself. Docker can then be
+            used to package and run that FastAPI application in a reproducible
+            container.
+        \end{tcolorbox}
+    
+    
+    \section*{A Simple FastAPI Example}
+        
+        \begin{minted}[
+            fontsize=\small,
+            breaklines,
+            breakanywhere,
+            frame=single,
+            framesep=3mm
+        ]{python}
+from fastapi import FastAPI
+
+app = FastAPI()
+
+@app.get("/hello")
+def hello():
+return {"message": "Hello from FastAPI"}
+        \end{minted}
+        
+        When a client sends a GET request to \texttt{/hello}, FastAPI returns:
+        
+        \begin{minted}[
+            fontsize=\small,
+            breaklines,
+            breakanywhere,
+            frame=single,
+            framesep=3mm
+        ]{json}
+{
+"message": "Hello from FastAPI"
+}
+        \end{minted}
+    
+    
+    \section*{What Does FastAPI Provide?}
+        
+        \rowcolors{2}{rowgray}{white}
+        
+        \begin{tabularx}{\textwidth}{T Y}
+
+\toprule
+\rowcolor{headerblue}
+\color{white}\textbf{Feature} &
+\color{white}\textbf{Explanation} \
+\midrule
+
+Routing &
+Connects addresses such as \texttt{/users}, \texttt{/orders}, or
+\texttt{/predict} to Python functions. \
+
+Input validation &
+Checks whether request data has the correct structure and data types. \
+
+JSON serialization &
+Converts Python objects into JSON responses that other applications can
+understand. \
+
+Type-hint integration &
+Uses Python type annotations to define parameters, request bodies, and
+response structures. \
+
+Automatic documentation &
+Automatically produces interactive OpenAPI documentation using Swagger
+UI and ReDoc. \
+
+Asynchronous endpoints &
+Supports \texttt{async} functions for operations involving databases,
+networks, files, and external services. \
+
+Dependency injection &
+Provides a structured way to supply database sessions, authenticated
+users, configuration, and reusable logic to endpoints. \
+
+Error handling &
+Converts application and validation errors into structured HTTP
+responses. \
+
+\bottomrule
+        
+        \end{tabularx}
+    
+    
+    \section*{Does Django Use FastAPI?}
+        
+        \begin{tcolorbox}[
+            colback=rowgray,
+            colframe=headerblue,
+            boxrule=0.7pt,
+            arc=2pt,
+            breakable
+        ]
+            \centering
+            \Large\textbf{No. Django does not use FastAPI.}
+        \end{tcolorbox}
+        
+        FastAPI and Django are two separate Python web frameworks.
+        
+        A normal Django application does not run FastAPI internally, and FastAPI
+        does not require Django. A developer can choose either framework based
+        on the requirements of the project.
+        
+        It is technically possible to place Django and FastAPI in the same large
+        system as separate services, but this is an architectural decision. It
+        does not mean that Django is based on FastAPI.
+    
+    
+    \section*{What Does Django Use Instead?}
+        
+        Django has its own web framework components, including:
+        
+        \begin{itemize}
+            \item URL routing;
+            \item function-based and class-based views;
+            \item HTTP request and response objects;
+            \item JSON responses;
+            \item database models and an ORM;
+            \item authentication and authorization;
+            \item an administration panel;
+            \item HTML templates;
+            \item forms and input validation;
+            \item middleware.
+        \end{itemize}
+        
+        For a simple JSON API, Django can return a \texttt{JsonResponse} directly.
+    
+    
+    \section*{A Simple Django API Example}
+        
+        \begin{minted}[
+            fontsize=\small,
+            breaklines,
+            breakanywhere,
+            frame=single,
+            framesep=3mm
+        ]{python}
+from django.http import JsonResponse
+
+def hello(request):
+return JsonResponse(
+{"message": "Hello from Django"}
+)
+        \end{minted}
+        
+        The corresponding Django URL configuration could be:
+        
+        \begin{minted}[
+            fontsize=\small,
+            breaklines,
+            breakanywhere,
+            frame=single,
+            framesep=3mm
+        ]{python}
+from django.urls import path
+from .views import hello
+
+urlpatterns = [
+path("hello/", hello),
+]
+        \end{minted}
+    
+    
+    \section*{Django REST Framework}
+        
+        Django itself can return JSON responses, but larger REST APIs usually
+        need additional features such as:
+        
+        \begin{itemize}
+            \item serializers;
+            \item API authentication;
+            \item permissions;
+            \item pagination;
+            \item filtering;
+            \item browsable API pages;
+            \item view sets;
+            \item structured validation.
+        \end{itemize}
+        
+        A common solution is \textbf{Django REST Framework}, often abbreviated
+        as \textbf{DRF}.
+        
+        DRF is installed on top of Django and uses Django's models, views,
+        authentication system, and request-response infrastructure.
+        
+        \begin{tcolorbox}[
+            colback=lightblue,
+            colframe=headerblue,
+            title=\textbf{Do not confuse these two statements},
+            fonttitle=\bfseries,
+            breakable
+        ]
+            \textbf{Django has its own basic API capabilities.}
+            
+            However, \textbf{Django REST Framework is a separate package} that adds
+            more specialized tools for building REST APIs.
+        \end{tcolorbox}
+    
+    
+    \section*{FastAPI Versus Django}
+        
+        \begin{tabularx}{\textwidth}{T Y Y}
+
+\toprule
+\rowcolor{headerblue}
+\color{white}\textbf{Aspect} &
+\color{white}\textbf{FastAPI} &
+\color{white}\textbf{Django} \
+\midrule
+
+Primary purpose &
+Building APIs and backend services. &
+Building complete web applications and backend systems. \
+
+Relationship &
+Independent Python framework. &
+Independent Python framework; it does not use FastAPI. \
+
+API support &
+API functionality is the central purpose of the framework. &
+Can create APIs directly or through Django REST Framework. \
+
+Database ORM &
+Does not include a full built-in ORM; it is commonly combined with
+SQLAlchemy or SQLModel. &
+Includes Django ORM as a central part of the framework. \
+
+Administration panel &
+Does not provide a Django-style administration interface by default. &
+Includes an automatically generated administration panel. \
+
+HTML templates &
+Possible, but not its primary focus. &
+Includes a complete template system for HTML websites. \
+
+Authentication &
+Provides tools and patterns, but the developer usually assembles the
+required authentication system. &
+Includes users, sessions, permissions, password handling, and
+authentication components. \
+
+Automatic API documentation &
+Built in through OpenAPI, Swagger UI, and ReDoc. &
+Not equivalent in basic Django; API documentation usually requires
+additional packages or DRF tooling. \
+
+Typical use &
+Microservices, ML model serving, mobile backends, and standalone APIs. &
+Business applications, content systems, dashboards, administrative
+systems, and full websites. \
+
+\bottomrule
+        
+        \end{tabularx}
+    
+    
+    \section*{Which One Is More Suitable?}
+        
+        \subsection*{Choose FastAPI When}
+            
+            \begin{itemize}
+                \item the main product is an API;
+                \item you are building a microservice;
+                \item you want to expose a machine-learning model;
+                \item automatic OpenAPI documentation is important;
+                \item the frontend and backend are separate applications;
+                \item you want a relatively small and focused backend framework.
+            \end{itemize}
+        
+        \subsection*{Choose Django When}
+            
+            \begin{itemize}
+                \item you need a complete website and backend;
+                \item you need a built-in administration panel;
+                \item the application has many related database models;
+                \item you need users, sessions, permissions, and forms;
+                \item you want many web-development features in one framework;
+                \item the project is a large business or content-management system.
+            \end{itemize}
+        
+        \subsection*{Choose Django REST Framework When}
+            
+            \begin{itemize}
+                \item the project already uses Django;
+                \item you want to expose Django models through a REST API;
+                \item you need serializers, permissions, pagination, and view sets;
+                \item you want Django's complete ecosystem together with a mature
+                REST API toolkit.
+            \end{itemize}
+    
+    
+    \section*{Relationship with Docker}
+        
+        FastAPI, Django, and Docker operate at different levels:
+        
+        \begin{tcolorbox}[
+            colback=rowgray,
+            colframe=headerblue,
+            boxrule=0.7pt,
+            arc=2pt,
+            breakable
+        ]
+            \begin{center}
+                \textbf{FastAPI or Django}\
+                Application framework used to write the backend
+            \end{center}
+            
+            [
+            \Downarrow
+            ]
+            
+            \begin{center}
+                \textbf{Docker}\
+                Packages the application, Python runtime, libraries, and configuration
+            \end{center}
+            
+            [
+            \Downarrow
+            ]
+            
+            \begin{center}
+                \textbf{Server, cloud platform, or Kubernetes}\
+                Runs and manages the packaged application
+            \end{center}
+        \end{tcolorbox}
+    
+    
+    \section*{Final Summary}
+        
+        \begin{tcolorbox}[
+            colback=lightblue,
+            colframe=headerblue,
+            title=\textbf{Summary},
+            fonttitle=\bfseries,
+            breakable
+        ]
+            FastAPI is a Python framework specialized in building APIs.
+            
+            Django does not use FastAPI. Django has its own routing, views, request
+            and response classes, ORM, authentication system, templates, and
+            administration panel.
+            
+            Django can create simple JSON APIs using \texttt{JsonResponse}. For more
+            advanced REST APIs, Django projects commonly use the separate
+            \textbf{Django REST Framework} package.
+            
+            FastAPI is usually a suitable choice for focused APIs, microservices,
+            and machine-learning model serving. Django is usually a suitable choice
+            for complete web applications that need database models, users,
+            administration, forms, and HTML pages.
+        \end{tcolorbox}
+        
+%        \bibliographystyle{plainnat}
+%        \bibliography{/home/donkarlo/Dropbox/repo/nd_shared_research/bibliography/bibliography.bib}
+
+\end{document}
+
