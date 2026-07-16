@@ -1,44 +1,164 @@
 \documentclass[a4paper]{article}
+
 \usepackage{graphicx}
 \usepackage{amsmath,amssymb}
-\usepackage{hyperref}
 \usepackage{minted}
 \usepackage{multirow}
-\input{/home/donkarlo/Dropbox/repo/nd_semiotic_project/src/nd_semiotic/language/natural/corpus/structured/kind/hierarchical/kind/tex/sectioning/additional.tex}
+\usepackage{float}
+\usepackage{todonotes}
+\usepackage{forest}
+\usepackage{xstring}
+\usepackage{xcolor}
+\usepackage[most]{tcolorbox}
+\usepackage{xparse}
+\usepackage{natbib}
+\usepackage[hidelinks]{hyperref}
 
-\title{Pycharm}
+\usetikzlibrary{graphs,graphdrawing}
+\usegdlibrary{layered}
+
+% Show numbering down to the subparagraph level.
+\setcounter{secnumdepth}{5}
+
+% Show headings down to the subparagraph level in the table of contents.
+\setcounter{tocdepth}{5}
+
+% For external Graphviz
+\input{/home/donkarlo/Dropbox/repo/nd_ai_project/src/nd_ai/knoweldge_representation/language/formal/computer/programming/tex/latex/code_clips/external_graphviz.tex}
+
+% For tags
+\input{/home/donkarlo/Dropbox/repo/nd_ai_project/src/nd_ai/knoweldge_representation/language/formal/computer/programming/tex/latex/parts/control_sequence/kind/semtag/semtag.tex}
+
+% For links
+\input{/home/donkarlo/Dropbox/repo/nd_ai_project/src/nd_ai/knoweldge_representation/language/formal/computer/programming/tex/latex/code_clips/seehere.tex}
+
+\title{PyCharm Notes}
 \date{}
+\author{Mohammad Rahmani}
+
 \begin{document}
+    
     \maketitle
-    \section{settings}
+    \tableofcontents
+    
+    
+    \section{Settings}
         
         \subsection{Editor}
             
-            \paragraph{Live templates}
-                for example if you want that whenever you type ``py`` in .tex files you see a suggestion for
+            \subsubsection{Live Templates}
+                
+                For example, suppose that you want PyCharm to suggest the following code
+                whenever you type \texttt{py} inside a \texttt{.tex} file:
+            
             \begin{verbatim}
-                \begin{minted}{python}
-                    python_code()
-                \end{minted}
-            \end{verbatim}
-                just go to \textit{settings>editor>live templates>}
-                and then from the right panel find latex and add ``mnt`` with the code you want. Do not forget to mark reformat and assign \textit{application} to it from low right panel
-        
-        \subsection{Python}
-            \subsubsection{Tool}
-                \subsubsubsection{integrated tools}
-                    \subsubsubsubsection{Docstring}
-    
-    
-    \section{Bug report}
-    \url{https://youtrack.jetbrains.com/issues/PY}
-    
-    
-    \section{Adding a file template to appear in project view right click}
-    File>settings>editor>File and code templates
+\begin{minted}{python}
+python_code()
+\end{minted}
+\end{verbatim}
 
-    \section{Run/Debug}
-        \subsection{Configuration}
-            \subsubsection{Templates}
-                From ``run`` from the main menue choose ``Edit configuration``  and from the opened menu , on the bottom left, choose   ``edit configuation template``. From there, for example, you can change the default latex engine.
+Open the following path:
+
+\begin{center}
+\texttt{Settings > Editor > Live Templates}
+\end{center}
+
+From the panel on the right, find the \texttt{LaTeX} group and add a new live
+template.
+
+For example, define the abbreviation as:
+
+\begin{center}
+\texttt{mnt}
+\end{center}
+
+Then enter the LaTeX code that should be inserted when the abbreviation is
+expanded.
+
+Do not forget to enable the reformatting option. You should also assign the
+template to the appropriate context by selecting \texttt{LaTeX} or
+\texttt{Application} from the context settings in the lower-right part of the
+window.
+
+\subsection{Python}
+
+\subsubsection{Tools}
+
+\paragraph{Integrated Tools}
+
+\subparagraph{Docstrings}
+
+The settings related to Python docstrings can be found under the integrated
+tools section of the PyCharm settings.
+
+\section{Bug Reports}
+
+PyCharm bugs and feature requests can be reported or viewed on the JetBrains
+YouTrack website:
+
+\begin{center}
+\url{https://youtrack.jetbrains.com/issues/PY}
+\end{center}
+
+\section{Adding a File Template to the Project View Context Menu}
+
+To create a new file template that appears when you right-click inside the
+Project view, open:
+
+\begin{center}
+\texttt{File > Settings > Editor > File and Code Templates}
+\end{center}
+
+You can create a new template and specify:
+
+\begin{itemize}
+\item the template name;
+\item the file extension;
+\item the default file content;
+\item optional template variables.
+\end{itemize}
+
+After saving the template, it should appear in the \texttt{New} menu when you
+right-click a directory in the Project view.
+
+\section{Run and Debug}
+
+\subsection{Configuration}
+
+\subsubsection{Configuration Templates}
+
+From the main menu, open:
+
+\begin{center}
+\texttt{Run > Edit Configurations}
+\end{center}
+
+In the opened window, select:
+
+\begin{center}
+\texttt{Edit Configuration Templates}
+\end{center}
+
+This option is normally available in the lower-left part of the Run/Debug
+Configurations window.
+
+Configuration templates define the default settings that PyCharm uses when a
+new run configuration is created.
+
+For example, in a LaTeX configuration template, you can change the default
+LaTeX engine to LuaLaTeX.
+
+Because this document uses both the \texttt{minted} package and TikZ graph
+drawing, it should be compiled using LuaLaTeX with shell escape enabled:
+
+\begin{minted}[frame=single,fontsize=\small]{bash}
+lualatex -shell-escape filename.tex
+\end{minted}
+
+The \texttt{-shell-escape} option is required by \texttt{minted} and may also
+be required by the external Graphviz commands used by this document.
+
+\bibliographystyle{plainnat}
+\bibliography{/home/donkarlo/Dropbox/repo/nd_shared_research/bibliography/bibliography.bib}
+
 \end{document}

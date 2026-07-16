@@ -1,0 +1,473 @@
+\documentclass[a4paper]{article}
+
+\usepackage{graphicx}
+\usepackage{amsmath,amssymb}
+\usepackage{minted}
+\usepackage{multirow}
+\usepackage{float}
+\usepackage{todonotes}
+\usepackage{forest}
+\usepackage{adjustbox}
+\usepackage{xstring}
+\usepackage{xcolor}
+\usepackage[most]{tcolorbox}
+\usepackage{xparse}
+\usepackage{natbib}
+
+\usetikzlibrary{graphs,graphdrawing}
+\usegdlibrary{layered}
+
+% For external Graphviz
+\input{/home/donkarlo/Dropbox/repo/nd_ai_project/src/nd_ai/knoweldge_representation/language/formal/computer/programming/tex/latex/code_clips/external_graphviz.tex}
+
+% For tags
+\input{/home/donkarlo/Dropbox/repo/nd_ai_project/src/nd_ai/knoweldge_representation/language/formal/computer/programming/tex/latex/parts/control_sequence/kind/semtag/semtag.tex}
+
+% For links
+\input{/home/donkarlo/Dropbox/repo/nd_ai_project/src/nd_ai/knoweldge_representation/language/formal/computer/programming/tex/latex/code_clips/seehere.tex}
+
+\title{Introduction to Kubernetes}
+\date{}
+\author{Mohammad Rahmani}
+
+\begin{document}
+    
+    \maketitle
+    
+    
+    \section{What Is Kubernetes?}
+        
+        Kubernetes, commonly abbreviated as \textbf{K8s}, is an open-source platform
+        for automatically deploying, managing, and scaling containerized applications.
+        
+        A container packages an application together with its dependencies. Docker is
+        commonly used to create and run such containers. However, when an application
+        contains many containers or runs on multiple servers, manually managing the
+        containers becomes difficult.
+        
+        Kubernetes solves this problem by coordinating the containers and deciding:
+        
+        \begin{itemize}
+            \item where each container should run;
+            \item how many copies of each container are required;
+            \item what should happen when a container crashes;
+            \item how network traffic should be distributed;
+            \item how a new version of an application should be deployed.
+        \end{itemize}
+        
+        \begin{tcolorbox}[
+            enhanced,
+            colback=blue!5,
+            colframe=blue!50!black,
+            title=Simple Definition
+        ]
+            Docker creates and runs containers, while Kubernetes manages many containers
+            across one or more machines.
+        \end{tcolorbox}
+    
+    
+    \section{Why Is Kubernetes Needed?}
+        
+        Consider an online store consisting of the following components:
+        
+        \begin{itemize}
+            \item a frontend application;
+            \item a backend API;
+            \item a database;
+            \item a Redis cache;
+            \item several background workers.
+        \end{itemize}
+        
+        Each component can run inside a separate Docker container. For a small system,
+        these containers can be managed manually or with Docker Compose.
+        
+        For a large production system, however, several problems appear:
+        
+        \begin{itemize}
+            \item A container may unexpectedly stop.
+            \item A server may become unavailable.
+            \item The number of users may suddenly increase.
+            \item Several copies of the backend may be required.
+            \item A new application version must be deployed without long downtime.
+            \item Requests must be distributed between several backend containers.
+        \end{itemize}
+        
+        Kubernetes automates these operations.
+    
+    
+    \section{Example}
+        
+        Assume that a backend application initially runs inside one container:
+        
+        \begin{minted}[frame=single,fontsize=\small]{text}
+Backend Container 1
+        \end{minted}
+        
+        When the number of users increases, Kubernetes can create additional copies:
+        
+        \begin{minted}[frame=single,fontsize=\small]{text}
+Backend Container 1
+Backend Container 2
+Backend Container 3
+Backend Container 4
+        \end{minted}
+        
+        Kubernetes then distributes incoming requests among these containers.
+        
+        If \texttt{Backend Container 2} crashes, Kubernetes detects the failure and
+        creates a replacement container. This behavior is called
+        \textbf{self-healing}.
+    
+    
+    \section{Main Responsibilities}
+        
+        \subsection{Container Deployment}
+            
+            Kubernetes starts the required containers according to a configuration
+            provided by the developer.
+        
+        \subsection{Self-Healing}
+            
+            If a container crashes or becomes unhealthy, Kubernetes restarts or replaces
+            it automatically.
+        
+        \subsection{Scaling}
+            
+            Kubernetes can increase or decrease the number of application instances.
+            
+            For example:
+            
+            \[
+                N_{\text{backend}} =
+                \begin{cases}
+                    2, & \text{during normal traffic},\\
+                    10, & \text{during high traffic}.
+                \end{cases}
+            \]
+            
+            Scaling may be performed manually or automatically according to CPU usage,
+            memory usage, or other metrics.
+        
+        \subsection{Load Balancing}
+            
+            When several copies of an application are running, Kubernetes distributes
+            network requests among them.
+        
+        \subsection{Rolling Updates}
+            
+            Kubernetes can gradually replace an old application version with a new one.
+            This makes it possible to update an application with little or no downtime.
+        
+        \subsection{Service Discovery}
+            
+            Containers may be created, destroyed, or moved between machines. Kubernetes
+            provides stable service names so that application components can communicate
+            without knowing the exact address of every container.
+    
+    
+    \section{Important Kubernetes Concepts}
+        
+        \subsection{Cluster}
+            
+            A Kubernetes cluster is a collection of machines managed as one system.
+            
+            A cluster normally contains:
+            
+            \begin{itemize}
+                \item a \textbf{control plane}, which manages the cluster;
+                \item one or more \textbf{worker nodes}, which run applications.
+            \end{itemize}
+        
+        \subsection{Node}
+            
+            A node is a physical or virtual machine belonging to the Kubernetes cluster.
+        
+        \subsection{Pod}
+            
+            A Pod is the smallest deployable unit in Kubernetes.
+            
+            A Pod usually contains one application container, although it may contain
+            multiple closely related containers.
+            
+            \begin{tcolorbox}[
+                enhanced,
+                colback=yellow!8,
+                colframe=yellow!50!black,
+                title=Important
+            ]
+                Kubernetes does not directly manage individual containers. It normally manages
+                Pods, and each Pod contains one or more containers.
+            \end{tcolorbox}
+        
+        \subsection{Deployment}
+            
+            A Deployment describes how an application should run.
+            
+            It can specify:
+            
+            \begin{itemize}
+                \item the container image;
+                \item the required number of Pod replicas;
+                \item the application version;
+                \item the update strategy.
+            \end{itemize}
+        
+        \subsection{Service}
+            
+            A Service provides a stable network address for a group of Pods.
+            
+            Even if the Pods are replaced or receive new IP addresses, the Service remains
+            available through the same name and address.
+    
+    
+    \section{Basic Architecture}
+        
+        A simplified Kubernetes architecture can be represented as follows:
+        
+        \begin{center}
+            \begin{adjustbox}{max width=\textwidth}
+                \begin{forest}
+                    for tree={
+                        draw,
+                        rounded corners,
+                        align=center,
+                        edge={->},
+                        l sep=12mm,
+                        s sep=6mm,
+                        inner xsep=5pt,
+                        inner ysep=4pt,
+                        font=\small
+                    }
+                    [Kubernetes Cluster
+                    [Control Plane
+                    [API Server]
+                    [Scheduler]
+                    [Controller Manager]
+                    ]
+                    [Worker Node 1
+                    [Pod
+                    [Backend Container]
+                    ]
+                    [Pod
+                    [Worker Container]
+                    ]
+                    ]
+                    [Worker Node 2
+                    [Pod
+                    [Backend Container]
+                    ]
+                    [Pod
+                    [Redis Container]
+                    ]
+                    ]
+                    ]
+                \end{forest}
+            \end{adjustbox}
+        \end{center}
+        
+        The control plane decides where applications should run. The worker nodes run
+        the actual Pods and containers.
+    
+    
+    \section{A Simple Kubernetes Configuration}
+        
+        The following configuration creates a Deployment containing three replicas of
+        an Nginx web server:
+        
+        \begin{minted}[frame=single,fontsize=\small]{yaml}
+apiVersion: apps/v1
+kind: Deployment
+
+metadata:
+  name: nginx-deployment
+
+spec:
+  replicas: 3
+
+  selector:
+    matchLabels:
+      app: nginx
+
+  template:
+    metadata:
+      labels:
+        app: nginx
+
+    spec:
+      containers:
+        - name: nginx
+          image: nginx:latest
+          ports:
+            - containerPort: 80
+        \end{minted}
+        
+        The important line is:
+        
+        \begin{minted}[frame=single,fontsize=\small]{yaml}
+replicas: 3
+        \end{minted}
+        
+        It instructs Kubernetes to keep three Nginx Pods running.
+        
+        If one Pod crashes, Kubernetes creates another Pod so that the desired number
+        remains three.
+    
+    
+    \section{Docker and Kubernetes}
+        
+        Docker and Kubernetes are related, but they solve different problems.
+        
+        \begin{table}[H]
+            \centering
+            \begin{tabular}{
+                |p{0.25\textwidth}
+                |p{0.30\textwidth}
+                |p{0.30\textwidth}|
+            }
+                \hline
+                \textbf{Feature}
+                &
+                \textbf{Docker}
+                &
+                \textbf{Kubernetes}
+                \\
+                \hline
+                
+                Main purpose
+                &
+                Building and running containers
+                &
+                Managing containerized applications
+                \\
+                \hline
+                
+                Typical scale
+                &
+                One machine or a small environment
+                &
+                Multiple machines and many containers
+                \\
+                \hline
+                
+                Automatic recovery
+                &
+                Limited
+                &
+                Automatically replaces failed Pods
+                \\
+                \hline
+                
+                Automatic scaling
+                &
+                Not normally provided by Docker alone
+                &
+                Supports horizontal and automatic scaling
+                \\
+                \hline
+                
+                Load balancing
+                &
+                Requires additional configuration
+                &
+                Built-in through Services and related resources
+                \\
+                \hline
+                
+                Rolling updates
+                &
+                Usually managed manually
+                &
+                Built-in Deployment functionality
+                \\
+                \hline
+            \end{tabular}
+            
+            \caption{A simplified comparison of Docker and Kubernetes.}
+        \end{table}
+    
+    
+    \section{Docker Compose and Kubernetes}
+        
+        Docker Compose is useful for running several related containers on one
+        machine.
+        
+        For example, it can run:
+        
+        \begin{itemize}
+            \item one backend container;
+            \item one database container;
+            \item one Redis container.
+        \end{itemize}
+        
+        Kubernetes is more suitable when:
+        
+        \begin{itemize}
+            \item the application runs on multiple servers;
+            \item high availability is required;
+            \item containers must restart automatically;
+            \item automatic scaling is required;
+            \item application updates must avoid downtime;
+            \item the system contains many services.
+        \end{itemize}
+    
+    
+    \section{When Should Kubernetes Be Used?}
+        
+        Kubernetes is useful for:
+        
+        \begin{itemize}
+            \item large web applications;
+            \item microservice architectures;
+            \item cloud-based services;
+            \item applications with unpredictable traffic;
+            \item systems requiring high availability;
+            \item machine-learning services with several models and APIs;
+            \item applications deployed across several servers.
+        \end{itemize}
+        
+        Kubernetes may be unnecessary for:
+        
+        \begin{itemize}
+            \item a small personal project;
+            \item a simple website running on one server;
+            \item an application with only one or two containers;
+            \item a project for which Docker Compose already provides everything
+            required.
+        \end{itemize}
+    
+    
+    \section{Summary}
+        
+        Kubernetes is a system for orchestrating containerized applications.
+        
+        Its main capabilities include:
+        
+        \begin{itemize}
+            \item deploying containers;
+            \item restarting failed applications;
+            \item scaling applications;
+            \item distributing network traffic;
+            \item managing applications across multiple servers;
+            \item updating applications with minimal downtime.
+        \end{itemize}
+        
+        The central distinction is:
+        
+        \begin{tcolorbox}[
+            enhanced,
+            colback=green!5,
+            colframe=green!45!black
+        ]
+            \centering
+            
+            \textbf{Docker packages and runs containers.}
+            
+            \medskip
+            
+            \textbf{Kubernetes coordinates and manages containers at scale.}
+        \end{tcolorbox}
+
+% \bibliographystyle{plainnat}
+% \bibliography{/home/donkarlo/Dropbox/repo/nd_shared_research/bibliography/bibliography.bib}
+
+\end{document}
