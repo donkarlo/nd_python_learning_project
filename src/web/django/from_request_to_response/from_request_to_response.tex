@@ -1,0 +1,125 @@
+\documentclass[a4paper]{article}
+
+\usepackage{graphicx}
+\usepackage{amsmath,amssymb}
+\usepackage{minted}
+\usepackage{multirow}
+\usepackage{float}
+\usepackage{todonotes}
+\usepackage{forest}
+\usepackage{xstring}
+\usepackage{xcolor}
+\usepackage[most]{tcolorbox}
+\usepackage{xparse}
+\usepackage{natbib}
+\usepackage{tikz}
+
+\usetikzlibrary{
+    graphs,
+    graphdrawing,
+    positioning,
+    arrows.meta,
+    shapes.geometric
+}
+
+\usegdlibrary{layered}
+
+% For external Graphviz
+\input{/home/donkarlo/Dropbox/repo/nd_ai_project/src/nd_ai/knoweldge_representation/language/formal/computer/programming/tex/latex/code_clips/external_graphviz.tex}
+
+% For tags
+\input{/home/donkarlo/Dropbox/repo/nd_ai_project/src/nd_ai/knoweldge_representation/language/formal/computer/programming/tex/latex/parts/control_sequence/kind/semtag/semtag.tex}
+
+% For links
+\input{/home/donkarlo/Dropbox/repo/nd_ai_project/src/nd_ai/knoweldge_representation/language/formal/computer/programming/tex/latex/code_clips/seehere.tex}
+
+\title{From Request to Response}
+\author{Mohammad Rahmani}
+\date{}
+
+\begin{document}
+    
+    \maketitle
+    
+    \begin{figure}[H]
+        \centering
+        
+        \begin{tikzpicture}[
+            node distance=8mm,
+            process/.style={
+                rectangle,
+                rounded corners,
+                draw,
+                thick,
+                minimum width=5cm,
+                minimum height=9mm,
+                align=center,
+                font=\ttfamily
+            },
+            database/.style={
+                cylinder,
+                shape border rotate=90,
+                aspect=0.25,
+                draw,
+                thick,
+                minimum width=5cm,
+                minimum height=12mm,
+                align=center,
+                font=\ttfamily
+            },
+            arrow/.style={
+                -{Latex[length=3mm]},
+                thick
+            }
+        ]
+
+        \node[process] (request)
+        {curl / HTTP request};
+        
+        \node[process, below=of request] (view-in)
+        {View};
+        
+        \node[process, below=of view-in] (serializer)
+        {Serializer};
+        
+        \node[process, below=of serializer] (service-in)
+        {Service};
+        
+        \node[process, below=of service-in] (repository-in)
+        {Repository};
+        
+        \node[database, below=of repository-in] (database)
+        {PostgreSQL};
+        
+        \node[process, below=of database] (repository-out)
+        {Repository};
+        
+        \node[process, below=of repository-out] (service-out)
+        {Service};
+        
+        \node[process, below=of service-out] (view-out)
+        {View};
+        
+        \node[process, below=of view-out] (response)
+        {JSON response};
+        
+        \draw[arrow] (request) -- (view-in);
+        \draw[arrow] (view-in) -- (serializer);
+        \draw[arrow] (serializer) -- (service-in);
+        \draw[arrow] (service-in) -- (repository-in);
+        \draw[arrow] (repository-in) -- (database);
+        \draw[arrow] (database) -- (repository-out);
+        \draw[arrow] (repository-out) -- (service-out);
+        \draw[arrow] (service-out) -- (view-out);
+        \draw[arrow] (view-out) -- (response);
+        
+        \end{tikzpicture}
+        
+        \caption{The request-response flow through the application layers.}
+        \label{fig:request-response-flow}
+    \end{figure}
+
+% \bibliographystyle{plainnat}
+% \bibliography{/home/donkarlo/Dropbox/repo/nd_shared_research/bibliography/bibliography.bib}
+
+\end{document}

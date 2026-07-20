@@ -1,0 +1,64 @@
+\documentclass[a4paper]{article}
+
+\usepackage{graphicx}
+\usepackage{amsmath,amssymb}
+\usepackage{minted}
+\usepackage{multirow}
+\usepackage{float}
+\usepackage{todonotes}
+\usepackage{forest}
+\usepackage{xstring}
+\usepackage{xcolor}
+\usepackage[most]{tcolorbox}
+\usepackage{xparse}
+\usepackage{natbib}
+
+\usetikzlibrary{graphs,graphdrawing}
+\usegdlibrary{layered}
+
+% for external graphviz
+\input{/home/donkarlo/Dropbox/repo/nd_ai_project/src/nd_ai/knoweldge_representation/language/formal/computer/programming/tex/latex/code_clips/external_graphviz.tex}
+
+% for tags
+\input{/home/donkarlo/Dropbox/repo/nd_ai_project/src/nd_ai/knoweldge_representation/language/formal/computer/programming/tex/latex/parts/control_sequence/kind/semtag/semtag.tex}
+
+% for links
+\input{/home/donkarlo/Dropbox/repo/nd_ai_project/src/nd_ai/knoweldge_representation/language/formal/computer/programming/tex/latex/code_clips/seehere.tex}
+
+\title{Serializer}
+\date{}
+\author{Mohammad Rahmani}
+
+\begin{document}
+    \maketitle
+    
+    \subsection{Responsibilities of a Serializer}
+        
+        \begin{itemize}
+            \item Receive data from the API request.
+            \item Validate required fields.
+            \item Validate data types and input formats.
+            \item Convert external data, such as JSON strings, into Python data types.
+            \item Convert date and time strings into \texttt{datetime} objects.
+            \item Produce validated and cleaned data for the service layer.
+            \item Convert model or domain objects into dictionaries or JSON-compatible data.
+            \item Format values such as dates and times for the API response.
+            \item Return clear validation errors for invalid input.
+        \end{itemize}
+    
+    \subsection{Tasks a Serializer Should Not Perform}
+        
+        \begin{itemize}
+            \item It should not execute SQL queries.
+            \item It should not directly access the database.
+            \item It should not create, update, or delete database records directly.
+            \item It should not implement business rules such as shift-overlap detection.
+            \item It should not coordinate multiple repositories.
+            \item It should not generate HTTP responses.
+            \item It should not select HTTP status codes.
+            \item It should not contain complex application logic.
+            \item It should not replace the responsibilities of the service or repository layers.
+        \end{itemize}
+        \bibliographystyle{plainnat}
+        \bibliography{/home/donkarlo/Dropbox/repo/nd_shared_research/bibliography/bibliography.bib}
+\end{document}

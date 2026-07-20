@@ -86,6 +86,47 @@
         \end{minted}
         
         Docker is especially useful for development, testing, continuous integration, and deployment because it helps teams run the same application environment in different places.
+    
+    
+    \section{Installation}
+        \begin{minted}{bash}
+            sudo apt update
+            sudo apt install -y docker.io docker-compose
+        \end{minted}
+    
+    
+    \section{Activating}
+        \begin{minted}{bash}
+            sudo systemctl enable --now docker
+        \end{minted}
+    
+    
+    \section{Checking the status}
+        \begin{minted}{bash}
+            sudo systemctl status docker
+        \end{minted}
+        To move out click "q"
+    
+    
+    \section{Running}
+        \begin{minted}{bash}
+            sudo usermod -aG docker "$USER"
+        \end{minted}
+        activate the group
+        \begin{minted}{bash}
+            newgrp docker
+        \end{minted}
+    
+    \section{Testing}
+        \begin{minted}{bash}
+            docker --version
+            docker-compose --version
+        \end{minted}
+    
+    \section{Testing testing container}
+        \begin{minted}{bash}
+            docker run hello-world
+        \end{minted}
 
 %        \bibliographystyle{plainnat}
 %        \bibliography{/home/donkarlo/Dropbox/repo/nd_shared_research/bibliography/bibliography.bib}
