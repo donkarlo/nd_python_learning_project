@@ -1,0 +1,681 @@
+\documentclass[a4paper]{article}
+
+\usepackage{graphicx}
+\usepackage{amsmath,amssymb}
+\usepackage{minted}
+\usepackage{multirow}
+\usepackage{float}
+\usepackage{todonotes}
+\usepackage{forest}
+\usepackage{xstring}
+\usepackage[table]{xcolor}
+\usepackage[most]{tcolorbox}
+\usepackage{xparse}
+\usepackage{natbib}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{array}
+\usepackage{listings}
+\usepackage[hidelinks]{hyperref}
+
+\usetikzlibrary{graphs,graphdrawing}
+\usegdlibrary{layered}
+
+% for external graphviz
+\input{/home/donkarlo/Dropbox/repo/nd_ai_project/src/nd_ai/knoweldge_representation/language/formal/computer/programming/tex/latex/code_clips/external_graphviz.tex}
+
+% for tags
+\input{/home/donkarlo/Dropbox/repo/nd_ai_project/src/nd_ai/knoweldge_representation/language/formal/computer/programming/tex/latex/parts/control_sequence/kind/semtag/semtag.tex}
+
+% for links
+\input{/home/donkarlo/Dropbox/repo/nd_ai_project/src/nd_ai/knoweldge_representation/language/formal/computer/programming/tex/latex/code_clips/seehere.tex}
+
+\title{HTTP Status Codes}
+\date{}
+\author{Mohammad Rahmani}
+
+% Colors
+\definecolor{rowblueone}{RGB}{242,248,255}
+\definecolor{rowbluetwo}{RGB}{220,237,252}
+\definecolor{headerblue}{RGB}{205,226,245}
+\definecolor{titleblue}{RGB}{52,101,164}
+
+% HTTP code formatting
+\newcommand{\httpcode}[1]{\texttt{\textbf{#1}}}
+
+% Table box
+\newtcolorbox{statuscategory}[1]{
+    enhanced,
+    colback=white,
+    colframe=titleblue,
+    colbacktitle=titleblue,
+    coltitle=white,
+    fonttitle=\bfseries,
+    title=#1,
+    boxrule=0.8pt,
+    arc=2mm,
+    left=2mm,
+    right=2mm,
+    top=2mm,
+    bottom=2mm
+}
+
+% Code block style
+\lstdefinestyle{httpstyle}{
+    basicstyle=\ttfamily\small,
+    frame=single,
+    breaklines=true,
+    columns=fullflexible,
+    keepspaces=true,
+    showstringspaces=false,
+    backgroundcolor=\color{rowblueone},
+    rulecolor=\color{titleblue}
+}
+
+\begin{document}
+    
+    \maketitle
+    
+    \tableofcontents
+    \newpage
+    
+    
+    \section{Overview}
+        
+        HTTP status codes are three-digit numbers returned by a server in response
+        to an HTTP request.
+        
+        The first digit identifies the general category of the response.
+        
+        \begin{center}
+            
+            \renewcommand{\arraystretch}{1.3}
+            \rowcolors{2}{rowblueone}{rowbluetwo}
+            
+            \begin{tabularx}{0.8\linewidth}{
+                    >{\ttfamily\bfseries\raggedright\arraybackslash}p{2cm}
+                    >{\raggedright\arraybackslash}X
+            }
+\rowcolor{headerblue}
+\textnormal{\textbf{Range}} &
+\textbf{Meaning} \\
+\midrule
+
+1xx &
+Informational responses. \\
+
+2xx &
+Successful responses. \\
+
+3xx &
+Redirection responses. \\
+
+4xx &
+Client error responses. \\
+
+5xx &
+Server error responses. \\
+
+\bottomrule
+            \end{tabularx}
+        
+        \end{center}
+    
+    
+    \section{1xx: Informational Responses}
+        
+        These codes indicate that the request has been received and processing is
+        continuing.
+        
+        \begin{statuscategory}{Common 1xx Status Codes}
+            
+            \renewcommand{\arraystretch}{1.3}
+            \rowcolors{2}{rowblueone}{rowbluetwo}
+            
+            \begin{tabularx}{\linewidth}{
+                    >{\ttfamily\bfseries\raggedright\arraybackslash}p{1.2cm}
+                    >{\raggedright\arraybackslash}p{3.7cm}
+                    >{\raggedright\arraybackslash}X
+            }
+\rowcolor{headerblue}
+\textnormal{\textbf{Code}} &
+\textbf{Name} &
+\textbf{Description} \\
+\midrule
+
+100 &
+Continue &
+The client may continue sending the request body. \\
+
+101 &
+Switching Protocols &
+The server agrees to switch to another protocol, such as WebSocket. \\
+
+102 &
+Processing &
+The server has received the request and is still processing it. \\
+
+103 &
+Early Hints &
+The server sends preliminary headers before the final response. \\
+
+\bottomrule
+            \end{tabularx}
+        
+        \end{statuscategory}
+    
+    
+    \section{2xx: Successful Responses}
+        
+        These codes indicate that the request was successfully received, understood,
+        and processed.
+        
+        \begin{statuscategory}{Common 2xx Status Codes}
+            
+            \renewcommand{\arraystretch}{1.3}
+            \rowcolors{2}{rowblueone}{rowbluetwo}
+            
+            \begin{tabularx}{\linewidth}{
+                    >{\ttfamily\bfseries\raggedright\arraybackslash}p{1.2cm}
+                    >{\raggedright\arraybackslash}p{3.7cm}
+                    >{\raggedright\arraybackslash}X
+            }
+\rowcolor{headerblue}
+\textnormal{\textbf{Code}} &
+\textbf{Name} &
+\textbf{Description} \\
+\midrule
+
+200 &
+OK &
+The request was successful and the server returned a response. \\
+
+201 &
+Created &
+The request was successful and a new resource was created. \\
+
+202 &
+Accepted &
+The request was accepted for processing, but processing has not necessarily
+finished. \\
+
+203 &
+Non-Authoritative Information &
+The returned information may have been modified by an intermediary server. \\
+
+204 &
+No Content &
+The request was successful, but the response has no body. \\
+
+205 &
+Reset Content &
+The request was successful and the client should reset the current view or
+form. \\
+
+206 &
+Partial Content &
+The server returned only part of the requested resource. \\
+
+\bottomrule
+            \end{tabularx}
+        
+        \end{statuscategory}
+        
+        \subsection{200 OK}
+            
+            A successful request that returns data:
+            
+            \begin{lstlisting}[style=httpstyle]
+GET /api/employees/ HTTP/1.1
+Host: localhost:8000
+            \end{lstlisting}
+            
+            Example response:
+            
+            \begin{lstlisting}[style=httpstyle]
+HTTP/1.1 200 OK
+Content-Type: application/json
+
+[
+    {
+        "id": 1,
+        "first_name": "Mani",
+        "last_name": "Rad"
+    }
+]
+            \end{lstlisting}
+        
+        \subsection{201 Created}
+            
+            A successful request that creates a new resource:
+            
+            \begin{lstlisting}[style=httpstyle]
+POST /api/employees/ HTTP/1.1
+Host: localhost:8000
+Content-Type: application/json
+
+{
+    "first_name": "Mani",
+    "last_name": "Rad",
+    "email": "mani.rad@example.com"
+}
+            \end{lstlisting}
+            
+            Example response:
+            
+            \begin{lstlisting}[style=httpstyle]
+HTTP/1.1 201 Created
+Content-Type: application/json
+Location: /api/employees/2/
+
+{
+    "id": 2,
+    "first_name": "Mani",
+    "last_name": "Rad",
+    "email": "mani.rad@example.com"
+}
+            \end{lstlisting}
+        
+        \subsection{204 No Content}
+            
+            A successful deletion with no response body:
+            
+            \begin{lstlisting}[style=httpstyle]
+DELETE /api/employees/2/ HTTP/1.1
+Host: localhost:8000
+            \end{lstlisting}
+            
+            Example response:
+            
+            \begin{lstlisting}[style=httpstyle]
+HTTP/1.1 204 No Content
+            \end{lstlisting}
+    
+    
+    \section{3xx: Redirection Responses}
+        
+        These codes indicate that the client must take additional action, usually by
+        requesting another URL.
+        
+        \begin{statuscategory}{Common 3xx Status Codes}
+            
+            \renewcommand{\arraystretch}{1.3}
+            \rowcolors{2}{rowblueone}{rowbluetwo}
+            
+            \begin{tabularx}{\linewidth}{
+                    >{\ttfamily\bfseries\raggedright\arraybackslash}p{1.2cm}
+                    >{\raggedright\arraybackslash}p{3.7cm}
+                    >{\raggedright\arraybackslash}X
+            }
+\rowcolor{headerblue}
+\textnormal{\textbf{Code}} &
+\textbf{Name} &
+\textbf{Description} \\
+\midrule
+
+300 &
+Multiple Choices &
+Several possible representations or destinations are available. \\
+
+301 &
+Moved Permanently &
+The requested resource has permanently moved to another URL. \\
+
+302 &
+Found &
+The requested resource is temporarily available at another URL. \\
+
+303 &
+See Other &
+The client should retrieve another resource using a GET request. \\
+
+304 &
+Not Modified &
+The cached version of the resource is still valid. \\
+
+307 &
+Temporary Redirect &
+The resource is temporarily available elsewhere, and the HTTP method must not
+change. \\
+
+308 &
+Permanent Redirect &
+The resource has permanently moved, and the HTTP method must not change. \\
+
+\bottomrule
+            \end{tabularx}
+        
+        \end{statuscategory}
+    
+    
+    \section{4xx: Client Error Responses}
+        
+        These codes indicate that there is a problem with the request sent by the
+        client.
+        
+        \begin{statuscategory}{Common 4xx Status Codes}
+            
+            \renewcommand{\arraystretch}{1.3}
+            \rowcolors{2}{rowblueone}{rowbluetwo}
+            
+            \begin{tabularx}{\linewidth}{
+                    >{\ttfamily\bfseries\raggedright\arraybackslash}p{1.2cm}
+                    >{\raggedright\arraybackslash}p{3.7cm}
+                    >{\raggedright\arraybackslash}X
+            }
+\rowcolor{headerblue}
+\textnormal{\textbf{Code}} &
+\textbf{Name} &
+\textbf{Description} \\
+\midrule
+
+400 &
+Bad Request &
+The request is invalid, malformed, or contains incorrect data. \\
+
+401 &
+Unauthorized &
+Authentication is required or the provided authentication credentials are
+invalid. \\
+
+403 &
+Forbidden &
+The server understands the request, but the client does not have permission
+to perform it. \\
+
+404 &
+Not Found &
+The requested resource does not exist. \\
+
+405 &
+Method Not Allowed &
+The HTTP method is not supported for the requested endpoint. \\
+
+406 &
+Not Acceptable &
+The server cannot return a response matching the client's requested format. \\
+
+408 &
+Request Timeout &
+The client did not complete the request within the allowed time. \\
+
+409 &
+Conflict &
+The request conflicts with the current state of the resource. \\
+
+410 &
+Gone &
+The resource existed previously but has been permanently removed. \\
+
+411 &
+Length Required &
+The server requires a Content-Length header. \\
+
+413 &
+Content Too Large &
+The request body is larger than the server allows. \\
+
+415 &
+Unsupported Media Type &
+The request body format or Content-Type is not supported. \\
+
+422 &
+Unprocessable Content &
+The request syntax is valid, but the supplied data cannot be processed. \\
+
+423 &
+Locked &
+The requested resource is locked. \\
+
+429 &
+Too Many Requests &
+The client has sent too many requests within a limited period. \\
+
+\bottomrule
+            \end{tabularx}
+        
+        \end{statuscategory}
+        
+        \subsection{400 Bad Request}
+            
+            \begin{lstlisting}[style=httpstyle]
+HTTP/1.1 400 Bad Request
+Content-Type: application/json
+
+{
+    "error": "Invalid request data."
+}
+            \end{lstlisting}
+        
+        \subsection{401 Unauthorized}
+            
+            \begin{lstlisting}[style=httpstyle]
+HTTP/1.1 401 Unauthorized
+Content-Type: application/json
+
+{
+    "error": "Authentication credentials were not provided."
+}
+            \end{lstlisting}
+        
+        \subsection{403 Forbidden}
+            
+            \begin{lstlisting}[style=httpstyle]
+HTTP/1.1 403 Forbidden
+Content-Type: application/json
+
+{
+    "error": "You do not have permission to perform this action."
+}
+            \end{lstlisting}
+        
+        \subsection{404 Not Found}
+            
+            \begin{lstlisting}[style=httpstyle]
+HTTP/1.1 404 Not Found
+Content-Type: application/json
+
+{
+    "error": "Employee not found."
+}
+            \end{lstlisting}
+        
+        \subsection{409 Conflict}
+            
+            \begin{lstlisting}[style=httpstyle]
+HTTP/1.1 409 Conflict
+Content-Type: application/json
+
+{
+    "error": "A work shift overlaps with an existing shift."
+}
+            \end{lstlisting}
+        
+        \subsection{422 Unprocessable Content}
+            
+            \begin{lstlisting}[style=httpstyle]
+HTTP/1.1 422 Unprocessable Content
+Content-Type: application/json
+
+{
+    "error": "The end time must be later than the start time."
+}
+            \end{lstlisting}
+    
+    
+    \section{5xx: Server Error Responses}
+        
+        These codes indicate that the server failed to complete a valid request.
+        
+        \begin{statuscategory}{Common 5xx Status Codes}
+            
+            \renewcommand{\arraystretch}{1.3}
+            \rowcolors{2}{rowblueone}{rowbluetwo}
+            
+            \begin{tabularx}{\linewidth}{
+                    >{\ttfamily\bfseries\raggedright\arraybackslash}p{1.2cm}
+                    >{\raggedright\arraybackslash}p{3.7cm}
+                    >{\raggedright\arraybackslash}X
+            }
+\rowcolor{headerblue}
+\textnormal{\textbf{Code}} &
+\textbf{Name} &
+\textbf{Description} \\
+\midrule
+
+500 &
+Internal Server Error &
+An unexpected error occurred inside the server. \\
+
+501 &
+Not Implemented &
+The server does not support the requested functionality. \\
+
+502 &
+Bad Gateway &
+A proxy or gateway received an invalid response from another server. \\
+
+503 &
+Service Unavailable &
+The server is temporarily unavailable, overloaded, or under maintenance. \\
+
+504 &
+Gateway Timeout &
+A proxy or gateway did not receive a response from another server in time. \\
+
+505 &
+HTTP Version Not Supported &
+The server does not support the HTTP version used in the request. \\
+
+507 &
+Insufficient Storage &
+The server does not have enough storage to complete the request. \\
+
+508 &
+Loop Detected &
+The server detected an infinite loop while processing the request. \\
+
+\bottomrule
+            \end{tabularx}
+        
+        \end{statuscategory}
+        
+        \subsection{500 Internal Server Error}
+            
+            \begin{lstlisting}[style=httpstyle]
+HTTP/1.1 500 Internal Server Error
+Content-Type: application/json
+
+{
+    "error": "An unexpected server error occurred."
+}
+            \end{lstlisting}
+        
+        \subsection{503 Service Unavailable}
+            
+            \begin{lstlisting}[style=httpstyle]
+HTTP/1.1 503 Service Unavailable
+Retry-After: 120
+Content-Type: application/json
+
+{
+    "error": "The service is temporarily unavailable."
+}
+            \end{lstlisting}
+    
+    
+    \section{Common REST API Conventions}
+        
+        \renewcommand{\arraystretch}{1.3}
+        \rowcolors{2}{rowblueone}{rowbluetwo}
+        
+        \begin{tabularx}{\linewidth}{
+                >{\ttfamily\raggedright\arraybackslash}p{1.5cm}
+                >{\raggedright\arraybackslash}p{3.2cm}
+                >{\ttfamily\bfseries\raggedright\arraybackslash}p{2cm}
+                >{\raggedright\arraybackslash}X
+        }
+\rowcolor{headerblue}
+\textnormal{\textbf{Method}} &
+\textbf{Operation} &
+\textnormal{\textbf{Code}} &
+\textbf{Meaning} \\
+\midrule
+
+GET &
+Retrieve a resource or collection &
+200 &
+The resource was successfully returned. \\
+
+POST &
+Create a new resource &
+201 &
+A new resource was successfully created. \\
+
+PUT &
+Replace an existing resource &
+200 &
+The updated resource is returned. \\
+
+PUT &
+Replace an existing resource &
+204 &
+The update succeeded and no response body is returned. \\
+
+PATCH &
+Partially update a resource &
+200 &
+The updated resource is returned. \\
+
+PATCH &
+Partially update a resource &
+204 &
+The update succeeded and no response body is returned. \\
+
+DELETE &
+Delete a resource &
+204 &
+The resource was deleted and no response body is returned. \\
+
+\bottomrule
+        \end{tabularx}
+    
+    
+    \section{Important Differences}
+        
+        \subsection{200 OK versus 201 Created}
+            
+            \begin{itemize}
+                \item \httpcode{200 OK}: the request was successful.
+                \item \httpcode{201 Created}: the request was successful and created a
+                new resource.
+            \end{itemize}
+        
+        \subsection{401 Unauthorized versus 403 Forbidden}
+            
+            \begin{itemize}
+                \item \httpcode{401 Unauthorized}: the client must authenticate.
+                \item \httpcode{403 Forbidden}: the client may be authenticated but does
+                not have permission.
+            \end{itemize}
+        
+        \subsection{400 Bad Request versus 422 Unprocessable Content}
+            
+            \begin{itemize}
+                \item \httpcode{400 Bad Request}: the request itself is malformed or invalid.
+                \item \httpcode{422 Unprocessable Content}: the request format is valid,
+                but its data fails validation.
+            \end{itemize}
+        
+        \subsection{404 Not Found versus 410 Gone}
+            
+            \begin{itemize}
+                \item \httpcode{404 Not Found}: the server cannot find the resource.
+                \item \httpcode{410 Gone}: the resource existed before but was permanently
+                removed.
+            \end{itemize}
+            
+            \bibliographystyle{plainnat}
+            \bibliography{/home/donkarlo/Dropbox/repo/nd_shared_research/bibliography/bibliography.bib}
+
+\end{document}
