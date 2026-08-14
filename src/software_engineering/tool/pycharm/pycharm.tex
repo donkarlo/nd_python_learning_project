@@ -51,114 +51,116 @@
                 For example, suppose that you want PyCharm to suggest the following code
                 whenever you type \texttt{py} inside a \texttt{.tex} file:
             
-            \begin{verbatim}
-\begin{minted}{python}
+            \begin{minted}{python}
 python_code()
-\end{minted}
-\end{verbatim}
-
-Open the following path:
-
-\begin{center}
-\texttt{Settings > Editor > Live Templates}
-\end{center}
-
-From the panel on the right, find the \texttt{LaTeX} group and add a new live
-template.
-
-For example, define the abbreviation as:
-
-\begin{center}
-\texttt{mnt}
-\end{center}
-
-Then enter the LaTeX code that should be inserted when the abbreviation is
-expanded.
-
-Do not forget to enable the reformatting option. You should also assign the
-template to the appropriate context by selecting \texttt{LaTeX} or
-\texttt{Application} from the context settings in the lower-right part of the
-window.
-
-\subsection{Python}
-
-\subsubsection{Tools}
-
-\paragraph{Integrated Tools}
-
-\subparagraph{Docstrings}
-
-The settings related to Python docstrings can be found under the integrated
-tools section of the PyCharm settings.
-
-\section{Bug Reports}
-
-PyCharm bugs and feature requests can be reported or viewed on the JetBrains
-YouTrack website:
-
-\begin{center}
-\url{https://youtrack.jetbrains.com/issues/PY}
-\end{center}
-
-\section{Adding a File Template to the Project View Context Menu}
-
-To create a new file template that appears when you right-click inside the
-Project view, open:
-
-\begin{center}
-\texttt{File > Settings > Editor > File and Code Templates}
-\end{center}
-
-You can create a new template and specify:
-
-\begin{itemize}
-\item the template name;
-\item the file extension;
-\item the default file content;
-\item optional template variables.
-\end{itemize}
-
-After saving the template, it should appear in the \texttt{New} menu when you
-right-click a directory in the Project view.
-
-\section{Run and Debug}
-
-\subsection{Configuration}
-
-\subsubsection{Configuration Templates}
-
-From the main menu, open:
-
-\begin{center}
-\texttt{Run > Edit Configurations}
-\end{center}
-
-In the opened window, select:
-
-\begin{center}
-\texttt{Edit Configuration Templates}
-\end{center}
-
-This option is normally available in the lower-left part of the Run/Debug
-Configurations window.
-
-Configuration templates define the default settings that PyCharm uses when a
-new run configuration is created.
-
-For example, in a LaTeX configuration template, you can change the default
-LaTeX engine to LuaLaTeX.
-
-Because this document uses both the \texttt{minted} package and TikZ graph
-drawing, it should be compiled using LuaLaTeX with shell escape enabled:
-
-\begin{minted}[frame=single,fontsize=\small]{bash}
+                \end{minted}
+                
+                Open the following path:
+            
+            \begin{center}
+                \texttt{Settings > Editor > Live Templates}
+                \end{center}
+                
+                From the panel on the right, find the \texttt{LaTeX} group and add a new live
+                template.
+                
+                \subsubsection{Defining shortcuts or keyboards for frequently used textual commands}
+                For example, define the abbreviation as:
+            
+            \begin{center}
+                \texttt{mnt}
+                \end{center}
+                
+                Then enter the LaTeX code that should be inserted when the abbreviation is
+                expanded.
+                
+                Do not forget to enable the reformatting option. You should also assign the
+                template to the appropriate context by selecting \texttt{LaTeX} or
+                \texttt{Application} from the context settings in the lower-right part of the
+                window.
+        
+        \subsection{Python}
+            
+            \subsubsection{Tools}
+                
+                \paragraph{Integrated Tools}
+                    
+                    \subparagraph{Docstrings}
+                        
+                        The settings related to Python docstrings can be found under the integrated
+                        tools section of the PyCharm settings.
+    
+    
+    \section{Bug Reports}
+        
+        PyCharm bugs and feature requests can be reported or viewed on the JetBrains
+        YouTrack website:
+        
+        \begin{center}
+            \url{https://youtrack.jetbrains.com/issues/PY}
+        \end{center}
+    
+    
+    \section{Adding a File Template to the Project View Context Menu}
+        
+        To create a new file template that appears when you right-click inside the
+        Project view, open:
+        
+        \begin{center}
+            \texttt{File > Settings > Editor > File and Code Templates}
+        \end{center}
+        
+        You can create a new template and specify:
+        
+        \begin{itemize}
+            \item the template name;
+            \item the file extension;
+            \item the default file content;
+            \item optional template variables.
+        \end{itemize}
+        
+        After saving the template, it should appear in the \texttt{New} menu when you
+        right-click a directory in the Project view.
+    
+    
+    \section{Run and Debug}
+        
+        \subsection{Configuration}
+            
+            \subsubsection{Configuration Templates}
+                
+                From the main menu, open:
+            
+            \begin{center}
+                \texttt{Run > Edit Configurations}
+                \end{center}
+                
+                In the opened window, select:
+            
+            \begin{center}
+                \texttt{Edit Configuration Templates}
+                \end{center}
+                
+                This option is normally available in the lower-left part of the Run/Debug
+                Configurations window.
+                
+                Configuration templates define the default settings that PyCharm uses when a
+                new run configuration is created.
+                
+                For example, in a LaTeX configuration template, you can change the default
+                LaTeX engine to LuaLaTeX.
+                
+                Because this document uses both the \texttt{minted} package and TikZ graph
+                drawing, it should be compiled using LuaLaTeX with shell escape enabled:
+            
+            \begin{minted}[frame=single,fontsize=\small]{bash}
 lualatex -shell-escape filename.tex
-\end{minted}
-
-The \texttt{-shell-escape} option is required by \texttt{minted} and may also
-be required by the external Graphviz commands used by this document.
-
-\bibliographystyle{plainnat}
-\bibliography{/home/donkarlo/Dropbox/repo/nd_shared_research/bibliography/bibliography.bib}
+                \end{minted}
+                
+                The \texttt{-shell-escape} option is required by \texttt{minted} and may also
+                be required by the external Graphviz commands used by this document.
+                
+                \bibliographystyle{plainnat}
+                \bibliography{/home/donkarlo/Dropbox/repo/nd_shared_research/bibliography/bibliography.bib}
 
 \end{document}
